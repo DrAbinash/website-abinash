@@ -10,6 +10,9 @@ services:
       - NODE_ENV=production
       - DATABASE_URL=file:/app/data/hospital.db
       - NEXT_PUBLIC_SITE_URL=https://hopeneurotrauma.in
+      # Password for the /admin/enquiries page where you can view messages
+      # sent through the website's contact form. CHANGE THIS before deploying.
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme123}
     volumes:
       - hope-neuro-data:/app/data
     healthcheck:

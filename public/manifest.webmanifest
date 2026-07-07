@@ -1,0 +1,17 @@
+{
+  "name": "Dr. Abinash Kumar — Hope NeuroTrauma & Multi Speciality Hospital",
+  "short_name": "Hope NeuroTrauma",
+  "description": "Consultant Neurosurgeon in Deoghar, Jharkhand — brain, spine & neurotrauma care.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#047857",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

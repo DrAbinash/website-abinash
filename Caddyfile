@@ -13,7 +13,10 @@
 	}
 
 	handle {
-		reverse_proxy localhost:3000 {
+		# Must match the HOST-side port in docker-compose.yml's
+		# "ports:" mapping (currently "3008:3000" -> host port 3008).
+		# If you ever change that port mapping, update this too.
+		reverse_proxy localhost:3008 {
 			header_up Host {host}
 			header_up X-Forwarded-For {remote_host}
 			header_up X-Forwarded-Proto {scheme}

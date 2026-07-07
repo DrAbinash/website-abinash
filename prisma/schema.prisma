@@ -30,3 +30,16 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// Stores every submission from the website's "Book an Appointment" contact
+// form, so enquiries are never lost even if the server restarts.
+model Enquiry {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  subject   String?
+  message   String
+  status    String   @default("new") // new | contacted | closed
+  createdAt DateTime @default(now())
+}

@@ -30,12 +30,12 @@ export const siteConfig = {
     mapLinkUrl: "https://www.google.com/maps/search/?api=1&query=Bajla+Mahila+College+Deoghar+814112",
   },
   contact: {
-    phone: "+91 90000 00000",
-    phoneHref: "+919000000000",
-    emergency: "+91 90000 00000",
-    emergencyHref: "+919000000000",
+    phone: "+91 99734 97200",
+    phoneHref: "+919973497200",
+    emergency: "+91 99734 97200",
+    emergencyHref: "+919973497200",
     email: "care@hopeneurotrauma.in",
-    whatsapp: "+919000000000",
+    whatsapp: "+919973497200",
     whatsappMessage: "Hello Dr. Abinash Kumar, I would like to book a neurosurgical consultation.",
   },
   timings: [

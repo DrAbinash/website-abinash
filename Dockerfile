@@ -9,7 +9,8 @@ FROM node:20-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json* bun.lock* ./
 COPY prisma ./prisma
-RUN npm install
+# Use the committed lockfile for a fast, reproducible install when present.
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 # ---------- Stage 2: builder ----------
 FROM node:20-slim AS builder

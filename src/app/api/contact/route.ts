@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { db } from "@/lib/db";
 
 type ContactPayload = {
   name?: string;
@@ -7,6 +8,8 @@ type ContactPayload = {
   subject?: string;
   message?: string;
 };
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
   let body: ContactPayload;
@@ -19,11 +22,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const name = (body.name ?? "").trim();
-  const phone = (body.phone ?? "").trim();
-  const message = (body.message ?? "").trim();
-  const email = (body.email ?? "").trim();
-  const subject = (body.subject ?? "").trim();
+  const name = (body.name ?? "").trim().slice(0, 200);
+  const phone = (body.phone ?? "").trim().slice(0, 40);
+  const message = (body.message ?? "").trim().slice(0, 4000);
+  const email = (body.email ?? "").trim().slice(0, 200);
+  const subject = (body.subject ?? "").trim().slice(0, 200);
 
   if (!name || !phone || !message) {
     return NextResponse.json(
@@ -32,16 +35,39 @@ export async function POST(request: Request) {
     );
   }
 
-  // In a production deployment you would forward this to email / CRM here.
-  // For now we just log it server-side so the submission is preserved.
+  if (email && !EMAIL_RE.test(email)) {
+    return NextResponse.json(
+      { ok: false, error: "Please enter a valid email address" },
+      { status: 422 }
+    );
+  }
+
+  // Always keep a log line as a backup trail in the container logs.
   console.log("[contact] new enquiry", {
     name,
     phone,
     email,
     subject,
-    message,
     at: new Date().toISOString(),
   });
+
+  // Persist to the database so the enquiry survives restarts/redeploys and
+  // is visible on the /admin/enquiries page.
+  try {
+    await db.enquiry.create({
+      data: { name, phone, email: email || null, subject: subject || null, message },
+    });
+  } catch (err) {
+    console.error("[contact] failed to save enquiry to database", err);
+    return NextResponse.json(
+      {
+        ok: false,
+        error:
+          "We could not save your message right now. Please call or WhatsApp us directly.",
+      },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({ ok: true, message: "Message received" });
 }
