@@ -34,7 +34,7 @@ export const siteConfig = {
     phoneHref: "+919973497200",
     emergency: "+91 99734 97200",
     emergencyHref: "+919973497200",
-    email: "care@hopeneurotrauma.in",
+    email: "care.deoghar@gmail.com",
     whatsapp: "+919973497200",
     whatsappMessage: "Hello Dr. Abinash Kumar, I would like to book a neurosurgical consultation.",
   },
