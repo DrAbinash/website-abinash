@@ -1,25 +1,26 @@
 # ============================================================================
 #  Dockerfile — Dr. Abinash Kumar website (Next.js standalone)
 #  Optimised for Synology Container Manager.
+#  Uses npm instead of bun for Prisma compatibility in Docker.
 # ============================================================================
 
 # ---------- Stage 1: deps ----------
-FROM oven/bun:1.3-debian AS deps
+FROM node:20-slim AS deps
 WORKDIR /app
-COPY package.json bun.lock* ./
+COPY package.json package-lock.json* bun.lock* ./
 COPY prisma ./prisma
-RUN bun install --frozen-lockfile
+RUN npm install
 
 # ---------- Stage 2: builder ----------
-FROM oven/bun:1.3-debian AS builder
+FROM node:20-slim AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN bun run db:generate
-RUN bun run build
+RUN npx prisma generate
+RUN npm run build
 
 # ---------- Stage 3: runner ----------
 FROM node:20-slim AS runner
@@ -41,8 +42,6 @@ RUN addgroup --system --gid 1001 nodejs \
 RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
 
 # ── CRITICAL: copy standalone server + static assets + public folder ──
-# The standalone output doesn't include public/ or .next/static/ by default.
-# Both must be copied explicitly or images and CSS won't load.
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
