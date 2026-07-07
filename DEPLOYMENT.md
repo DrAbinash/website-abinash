@@ -10,7 +10,7 @@ Docker app built into DSM 7.2+).
 
 - A Synology NAS with **Container Manager** installed (Package Center →
   search "Container Manager" → Install).
-- Your domain (e.g. `hopeneurotrauma.in`) pointed at your NAS, if you want
+- Your domain (e.g. `hope.caredeoghar.com`) pointed at your NAS, if you want
   the site reachable on the internet (ask your domain registrar / IT
   person if you're unsure how — this is a one-time DNS setting).
 - A GitHub account with this repository, and Git installed *or* just the
@@ -30,7 +30,7 @@ Open **File Station**, navigate into the extracted folder, and edit
 `docker-compose.yml` with the built-in text editor (right-click the file →
 Open with → Text Editor), or use File Station's "Edit" option:
 
-- Find the line `NEXT_PUBLIC_SITE_URL=https://hopeneurotrauma.in` and make
+- Find the line `NEXT_PUBLIC_SITE_URL=https://hope.caredeoghar.com` and make
   sure it matches your real domain.
 - Find `ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme123}` — **change
   `changeme123`** to a password only you know. This protects the page
@@ -61,7 +61,7 @@ website container running on port 3008.
   other sites, drop this `Caddyfile` into that setup.
 - If you don't have a reverse proxy yet, DSM's own **Control Panel →
   Login Portal → Advanced → Reverse Proxy** is usually simpler: create a
-  rule that forwards `hopeneurotrauma.in` (port 443, HTTPS) to
+  rule that forwards `hope.caredeoghar.com` (port 443, HTTPS) to
   `localhost:3008` (the container's published port). DSM will also handle
   the SSL certificate for you (**Control Panel → Security →
   Certificate**, use "Let's Encrypt").
