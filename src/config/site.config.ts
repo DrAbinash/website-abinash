@@ -12,7 +12,7 @@ export const siteConfig = {
       "He manages the full spectrum of neurosurgical conditions — from complex brain tumours and spinal disorders to head injuries, stroke, and paediatric neurosurgical problems. His practice emphasizes minimally invasive techniques that mean smaller incisions, less pain, and faster recovery for patients.",
       "At Hope NeuroTrauma & Multi Speciality Hospital, Deoghar, Dr. Kumar leads a dedicated neurotrauma and spine programme, providing round-the-clock emergency neurosurgical cover for critically injured patients.",
     ],
-    photo: "/doctor-placeholder.jpg",
+    photo: "/doctor-photo.png",
     yearsOfExperience: 10,
   },
   hospital: {
