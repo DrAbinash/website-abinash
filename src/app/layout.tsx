@@ -81,6 +81,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        {/* Apply cached color theme before paint to avoid flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("abinash-theme")||"emerald";var m={emerald:":root{--primary:oklch(0.45 0.11 162);--primary-foreground:oklch(0.98 0.01 160);--ring:oklch(0.5 0.09 162);--accent:oklch(0.93 0.04 160);--secondary:oklch(0.95 0.02 160)}",rose:":root{--primary:oklch(0.56 0.20 12);--primary-foreground:oklch(0.98 0.01 15);--ring:oklch(0.6 0.16 12);--accent:oklch(0.93 0.045 15);--secondary:oklch(0.95 0.02 15)}",amber:":root{--primary:oklch(0.6 0.15 65);--primary-foreground:oklch(0.16 0.02 65);--ring:oklch(0.58 0.14 65);--accent:oklch(0.93 0.06 75);--secondary:oklch(0.95 0.03 75)}",burgundy:":root{--primary:oklch(0.42 0.14 350);--primary-foreground:oklch(0.98 0.01 350);--ring:oklch(0.48 0.13 350);--accent:oklch(0.93 0.045 350);--secondary:oklch(0.95 0.02 350)}"};var s=document.createElement("style");s.id="abinash-theme-early";s.textContent=m[t]||m.emerald;document.head.appendChild(s);}catch(e){}`,
+          }}
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
         {children}

@@ -43,3 +43,18 @@ model Enquiry {
   status    String   @default("new") // new | contacted | closed
   createdAt DateTime @default(now())
 }
+
+// Site-wide configurable settings (single row, id = "default").
+// Editable at runtime from the in-page Admin Panel (gear button, bottom-right).
+// These overlay the static siteConfig for the few fields that benefit from
+// runtime editing: theme color, booking URL, whatsapp, admin password.
+model SiteSettings {
+  id            String   @id @default("default")
+  primaryColor  String   @default("emerald") // emerald | rose | amber | burgundy
+  bookingUrl    String   @default("") // empty = use in-app contact form
+  whatsapp      String   @default("+919973497200")
+  phone         String   @default("+919973497200")
+  adminPassword String   @default("admin123")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

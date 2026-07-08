@@ -7,6 +7,7 @@ import { ArrowRight, Calendar, Ambulance, ShieldCheck, Star } from "lucide-react
 import { siteConfig } from "@/config/site.config";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { BookLink } from "@/components/book-link";
 
 const trustItems = [
   { icon: ShieldCheck, label: "M.Ch. Neurosurgery" },
@@ -105,10 +106,10 @@ export function Hero() {
               size="lg"
               className="bg-emerald-700 text-white hover:bg-emerald-800"
             >
-              <a href="#contact">
+              <BookLink>
                 <Calendar className="size-4" />
                 Book Appointment
-              </a>
+              </BookLink>
             </Button>
             <Button asChild size="lg" variant="outline">
               <a href="#expertise">

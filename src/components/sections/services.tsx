@@ -6,6 +6,7 @@ import { CheckCircle2 } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { BookLink } from "@/components/book-link";
 
 export function Services() {
   return (
@@ -69,12 +70,11 @@ export function Services() {
                   Get an honest, no-pressure consultation from Dr. Abinash Kumar.
                 </p>
               </div>
-              <a
-                href="#contact"
+              <BookLink
                 className="inline-flex h-10 items-center justify-center rounded-md bg-white px-5 text-sm font-semibold text-emerald-800 transition-colors hover:bg-emerald-50"
               >
                 Book a Consultation
-              </a>
+              </BookLink>
             </CardContent>
           </Card>
         </motion.div>

@@ -7,6 +7,7 @@ import { siteConfig } from "@/config/site.config";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { BookLink } from "@/components/book-link";
 
 export function About() {
   return (
@@ -96,10 +97,10 @@ export function About() {
                 asChild
                 className="bg-emerald-700 hover:bg-emerald-800"
               >
-                <a href="#contact">
+                <BookLink>
                   Book a Consultation
                   <ArrowRight className="size-4" />
-                </a>
+                </BookLink>
               </Button>
               <Button asChild variant="outline">
                 <a href={`tel:${siteConfig.contact.phoneHref}`}>

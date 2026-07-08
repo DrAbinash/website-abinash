@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Navbar } from "@/components/sections/navbar";
 import { Hero } from "@/components/sections/hero";
 import { Stats } from "@/components/sections/stats";
@@ -11,8 +14,23 @@ import { Location } from "@/components/sections/location";
 import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/sections/footer";
 import { FloatingCta } from "@/components/sections/floating-cta";
+import { AdminPanel } from "@/components/admin-panel";
+import { ThemeInjector } from "@/components/theme-injector";
 
 export default function Home() {
+  const [primaryColor, setPrimaryColor] = useState<string | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.ok) setPrimaryColor(d.settings.primaryColor);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
@@ -30,6 +48,8 @@ export default function Home() {
       </main>
       <Footer />
       <FloatingCta />
+      <AdminPanel />
+      <ThemeInjector primaryColor={primaryColor} />
     </div>
   );
 }

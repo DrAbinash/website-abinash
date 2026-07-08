@@ -7,6 +7,7 @@ import { Menu, Phone, Calendar, Ambulance, ChevronRight } from "lucide-react";
 
 import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
+import { BookLink } from "@/components/book-link";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -105,10 +106,10 @@ export function Navbar() {
             </a>
           </Button>
           <Button asChild size="sm" className="bg-emerald-700 hover:bg-emerald-800">
-            <a href="#contact">
+            <BookLink>
               <Calendar className="size-4" />
               <span>Book Appointment</span>
-            </a>
+            </BookLink>
           </Button>
         </div>
 
@@ -167,10 +168,10 @@ export function Navbar() {
                 </Button>
                 <SheetClose asChild>
                   <Button asChild className="bg-emerald-700 hover:bg-emerald-800">
-                    <a href="#contact">
+                    <BookLink>
                       <Calendar className="size-4" />
                       Book Appointment
-                    </a>
+                    </BookLink>
                   </Button>
                 </SheetClose>
               </div>

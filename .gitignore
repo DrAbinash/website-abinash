@@ -62,3 +62,8 @@ download/
 upload/
 worklog.md
 dev.log
+
+# Local SQLite database (do not commit runtime data)
+*.db
+*.db-journal
+/db/
