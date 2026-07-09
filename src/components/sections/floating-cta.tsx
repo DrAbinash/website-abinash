@@ -41,7 +41,7 @@ export function FloatingCta() {
           <a
             href={`tel:${siteConfig.contact.phoneHref}`}
             aria-label="Call clinic"
-            className="flex size-12 items-center justify-center rounded-full bg-emerald-700 text-white shadow-lg shadow-emerald-900/20 transition-transform hover:scale-105"
+            className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:scale-105"
           >
             <Phone className="size-5" />
           </a>

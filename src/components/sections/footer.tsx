@@ -24,15 +24,15 @@ function BrandLogo({ className }: { className?: string }) {
       className={className}
       aria-hidden="true"
     >
-      <circle cx="24" cy="24" r="22" fill="white" />
+      <circle cx="24" cy="24" r="22" className="fill-primary-foreground" />
       <path
         d="M18 13c-3.2 0-5.5 2.4-5.5 5.3 0 1 .3 1.9.8 2.7-1.6.9-2.6 2.5-2.6 4.4 0 2.7 2.1 4.9 4.8 5 .2 2.4 2.3 4.4 4.8 4.4 1.7 0 3.2-.9 4-2.2.8 1.3 2.3 2.2 4 2.2 2.5 0 4.6-2 4.8-4.4 2.7-.1 4.8-2.3 4.8-5 0-1.9-1-3.5-2.6-4.4.5-.8.8-1.7.8-2.7 0-2.9-2.3-5.3-5.5-5.3-1.8 0-3.4.8-4.4 2.1-1-1.3-2.6-2.1-4.4-2.1h-1.2c-1.8 0-3.4.8-4.4 2.1-.6-.8-1.5-1.4-2.4-1.8"
-        fill="oklch(0.51 0.13 162)"
+        className="fill-primary"
         opacity="0.95"
       />
       <path
         d="M24 16.5v15M17 22h14M19 27.5h10"
-        stroke="white"
+        className="stroke-primary-foreground"
         strokeWidth="1.4"
         strokeLinecap="round"
       />
@@ -50,7 +50,7 @@ export function Footer() {
   ].filter((s) => Boolean(s.href));
 
   return (
-    <footer className="mt-auto bg-emerald-800 text-emerald-50">
+    <footer className="mt-auto bg-primary text-primary-foreground">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
@@ -59,22 +59,22 @@ export function Footer() {
               <BrandLogo className="size-9" />
               <div className="leading-tight">
                 <p className="text-sm font-bold">{siteConfig.doctor.name}</p>
-                <p className="text-[10px] uppercase tracking-wider text-emerald-200">
+                <p className="text-[10px] uppercase tracking-wider text-primary-foreground/70">
                   {siteConfig.doctor.title}
                 </p>
               </div>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-emerald-100/80">
+            <p className="mt-4 text-sm leading-relaxed text-primary-foreground/80">
               {siteConfig.hospital.tagline}
             </p>
-            <p className="mt-3 text-xs text-emerald-100/70">
+            <p className="mt-3 text-xs text-primary-foreground/70">
               {siteConfig.hospital.name}
             </p>
           </div>
 
           {/* Quick links */}
           <nav aria-label="Footer quick links">
-            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-200">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary-foreground/70">
               Quick Links
             </p>
             <ul className="mt-4 space-y-2">
@@ -82,7 +82,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-emerald-100/80 transition-colors hover:text-white"
+                    className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                   >
                     {item.label}
                   </Link>
@@ -93,7 +93,7 @@ export function Footer() {
 
           {/* Specializations */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-200">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary-foreground/70">
               Specializations
             </p>
             <ul className="mt-4 space-y-2">
@@ -101,7 +101,7 @@ export function Footer() {
                 <li key={s.title}>
                   <Link
                     href="#expertise"
-                    className="text-sm text-emerald-100/80 transition-colors hover:text-white"
+                    className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                   >
                     {s.title}
                   </Link>
@@ -112,39 +112,39 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-200">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary-foreground/70">
               Contact
             </p>
             <ul className="mt-4 space-y-3 text-sm">
               <li className="flex gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-emerald-200" />
-                <span className="text-emerald-100/80">
+                <MapPin className="mt-0.5 size-4 shrink-0 text-primary-foreground/70" />
+                <span className="text-primary-foreground/80">
                   {siteConfig.hospital.address.full}
                 </span>
               </li>
               <li className="flex gap-2.5">
-                <Phone className="mt-0.5 size-4 shrink-0 text-emerald-200" />
+                <Phone className="mt-0.5 size-4 shrink-0 text-primary-foreground/70" />
                 <a
                   href={`tel:${siteConfig.contact.phoneHref}`}
-                  className="text-emerald-100/80 transition-colors hover:text-white"
+                  className="text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                 >
                   {siteConfig.contact.phone}
                 </a>
               </li>
               <li className="flex gap-2.5">
-                <Ambulance className="mt-0.5 size-4 shrink-0 text-red-200" />
+                <Ambulance className="mt-0.5 size-4 shrink-0 text-red-300" />
                 <a
                   href={`tel:${siteConfig.contact.emergencyHref}`}
-                  className="text-emerald-100/80 transition-colors hover:text-white"
+                  className="text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                 >
                   {siteConfig.contact.emergency} (24×7)
                 </a>
               </li>
               <li className="flex gap-2.5">
-                <Mail className="mt-0.5 size-4 shrink-0 text-emerald-200" />
+                <Mail className="mt-0.5 size-4 shrink-0 text-primary-foreground/70" />
                 <a
                   href={`mailto:${siteConfig.contact.email}`}
-                  className="break-all text-emerald-100/80 transition-colors hover:text-white"
+                  className="break-all text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                 >
                   {siteConfig.contact.email}
                 </a>
@@ -160,7 +160,7 @@ export function Footer() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={s.label}
-                    className="flex size-8 items-center justify-center rounded-full bg-emerald-700/60 text-emerald-100 transition-colors hover:bg-emerald-600 hover:text-white"
+                    className="flex size-8 items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/90 transition-colors hover:bg-primary-foreground/20"
                   >
                     <s.icon className="size-4" />
                   </a>
@@ -170,7 +170,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-emerald-700/60 pt-6 text-xs text-emerald-100/70 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-primary-foreground/15 pt-6 text-xs text-primary-foreground/70 sm:flex-row">
           <p>
             © {new Date().getFullYear()} {siteConfig.hospital.name}. All rights
             reserved.

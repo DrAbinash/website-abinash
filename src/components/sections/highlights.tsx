@@ -4,24 +4,20 @@ import { motion } from "framer-motion";
 
 import { siteConfig } from "@/config/site.config";
 import { getIcon } from "@/components/icon-map";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 export function Highlights() {
   return (
     <section
       id="highlights"
-      className="bg-background py-16 sm:py-20 lg:py-24"
+      className="bg-background py-20 sm:py-28"
       aria-labelledby="highlights-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <Badge variant="secondary" className="mb-3 bg-emerald-100 text-emerald-800">
-            Why Choose Us
-          </Badge>
+          <p className="eyebrow justify-center">Why Choose Us</p>
           <h2
             id="highlights-heading"
-            className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
+            className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
             Care That Puts Patients First
           </h2>
@@ -41,20 +37,17 @@ export function Highlights() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: i * 0.08 }}
+                className="h-full rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
               >
-                <Card className="h-full border-emerald-100 bg-gradient-to-b from-white to-emerald-50/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-900/5">
-                  <CardContent className="flex h-full flex-col gap-3">
-                    <div className="flex size-11 items-center justify-center rounded-full bg-emerald-700 text-white shadow-md shadow-emerald-700/20">
-                      <Icon className="size-5" />
-                    </div>
-                    <h3 className="text-base font-semibold text-foreground">
-                      {h.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      {h.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md shadow-primary/20">
+                  <Icon className="size-5" />
+                </div>
+                <h3 className="mt-4 text-base font-semibold text-foreground">
+                  {h.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {h.description}
+                </p>
               </motion.div>
             );
           })}

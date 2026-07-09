@@ -6,7 +6,6 @@ import { ArrowRight, Calendar, Ambulance, ShieldCheck, Star } from "lucide-react
 
 import { siteConfig } from "@/config/site.config";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { BookLink } from "@/components/book-link";
 
 const trustItems = [
@@ -19,43 +18,29 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-radial-emerald"
+      className="relative overflow-hidden bg-hero-panel"
       aria-labelledby="hero-heading"
     >
-      {/* Decorative grid */}
-      <div className="absolute inset-0 bg-grid opacity-60" aria-hidden="true" />
-      <div
-        className="absolute -top-24 -right-24 size-72 rounded-full bg-emerald-200/40 blur-3xl"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute -bottom-32 -left-24 size-80 rounded-full bg-emerald-100/60 blur-3xl"
-        aria-hidden="true"
-      />
+      <div className="absolute inset-0 bg-grid opacity-70" aria-hidden="true" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 md:py-16 lg:px-8 lg:py-24">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 md:py-20 lg:px-8 lg:py-28">
         {/* Left: text */}
         <div className="order-2 md:order-1">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="eyebrow"
           >
-            <Badge
-              variant="secondary"
-              className="mb-4 gap-1.5 bg-emerald-100 text-emerald-800"
-            >
-              <span className="size-1.5 rounded-full bg-emerald-600" />
-              {siteConfig.hospital.shortName}
-            </Badge>
-          </motion.div>
+            {siteConfig.hospital.shortName}
+          </motion.p>
 
           <motion.h1
             id="hero-heading"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-balance text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+            className="mt-4 text-balance text-4xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl"
           >
             {siteConfig.doctor.name}
           </motion.h1>
@@ -64,7 +49,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-3 text-lg font-semibold text-emerald-800 sm:text-xl"
+            className="mt-3 text-lg font-semibold text-primary sm:text-xl"
           >
             {siteConfig.doctor.title}
           </motion.p>
@@ -73,16 +58,15 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="mt-4 flex flex-wrap gap-2"
+            className="mt-4 flex flex-wrap gap-1.5"
           >
             {siteConfig.doctor.qualifications.map((q) => (
-              <Badge
+              <span
                 key={q}
-                variant="outline"
-                className="border-emerald-200 bg-white/70 text-emerald-900"
+                className="rounded-full border border-border bg-background/80 px-2.5 py-1 text-xs font-medium text-foreground/80"
               >
                 {q}
-              </Badge>
+              </span>
             ))}
           </motion.div>
 
@@ -101,11 +85,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.25 }}
             className="mt-7 flex flex-col gap-3 sm:flex-row"
           >
-            <Button
-              asChild
-              size="lg"
-              className="bg-emerald-700 text-white hover:bg-emerald-800"
-            >
+            <Button asChild size="lg">
               <BookLink>
                 <Calendar className="size-4" />
                 Book Appointment
@@ -123,14 +103,14 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2"
+            className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border/70 pt-6"
           >
             {trustItems.map((t) => (
               <div
                 key={t.label}
-                className="flex items-center gap-1.5 text-xs font-medium text-emerald-900/80 sm:text-sm"
+                className="flex items-center gap-1.5 text-xs font-medium text-foreground/80 sm:text-sm"
               >
-                <t.icon className="size-4 text-emerald-700" />
+                <t.icon className="size-4 text-primary" />
                 {t.label}
               </div>
             ))}
@@ -140,19 +120,19 @@ export function Hero() {
         {/* Right: hero image with floating cards */}
         <div className="relative order-1 md:order-2">
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
+            initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="relative mx-auto max-w-md md:max-w-none"
           >
-            <div className="relative overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-2xl shadow-emerald-900/10">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-xl shadow-primary/5">
               <img
                 src="/hero-brain.png"
                 alt="Illustration of the human brain symbolising neurosurgical care"
                 className="aspect-[4/5] w-full object-cover sm:aspect-[5/4] md:aspect-[4/5]"
                 loading="eager"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1.5 bg-primary" />
             </div>
 
             {/* Floating stat card top-left */}
@@ -160,10 +140,10 @@ export function Hero() {
               initial={{ opacity: 0, x: -20, y: -10 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="absolute -left-4 top-6 hidden rounded-2xl border border-border/60 bg-background/95 p-4 shadow-xl backdrop-blur-sm sm:block"
+              className="absolute -left-4 top-6 hidden rounded-xl border border-border bg-background/95 p-4 shadow-xl backdrop-blur-sm sm:block"
             >
               <div className="flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Ambulance className="size-5" />
                 </div>
                 <div>
@@ -180,9 +160,9 @@ export function Hero() {
               initial={{ opacity: 0, x: 20, y: 10 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="absolute -right-4 bottom-6 hidden rounded-2xl border border-border/60 bg-background/95 p-4 shadow-xl backdrop-blur-sm sm:block"
+              className="absolute -right-4 bottom-6 hidden rounded-xl border border-border bg-background/95 p-4 shadow-xl backdrop-blur-sm sm:block"
             >
-              <p className="text-2xl font-extrabold text-emerald-700">
+              <p className="text-2xl font-extrabold text-primary">
                 2000<span className="text-base align-top">+</span>
               </p>
               <p className="text-xs text-muted-foreground">

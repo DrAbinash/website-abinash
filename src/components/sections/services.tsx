@@ -4,25 +4,21 @@ import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 
 import { siteConfig } from "@/config/site.config";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { BookLink } from "@/components/book-link";
 
 export function Services() {
   return (
     <section
       id="services"
-      className="bg-emerald-50/40 py-16 sm:py-20 lg:py-24"
+      className="bg-secondary/40 py-20 sm:py-28"
       aria-labelledby="services-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <Badge variant="secondary" className="mb-3 bg-emerald-100 text-emerald-800">
-            Conditions Treated
-          </Badge>
+          <p className="eyebrow justify-center">Conditions Treated</p>
           <h2
             id="services-heading"
-            className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
+            className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
             Comprehensive Neurosurgical Services
           </h2>
@@ -40,15 +36,12 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-30px" }}
               transition={{ duration: 0.35, delay: (i % 6) * 0.05 }}
+              className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 transition-colors hover:border-primary/40"
             >
-              <Card className="h-full border-emerald-100 transition-colors hover:border-emerald-300">
-                <CardContent className="flex items-center gap-3 py-3.5">
-                  <CheckCircle2 className="size-5 shrink-0 text-emerald-600" />
-                  <span className="text-sm font-medium text-foreground">
-                    {condition}
-                  </span>
-                </CardContent>
-              </Card>
+              <CheckCircle2 className="size-5 shrink-0 text-primary" />
+              <span className="text-sm font-medium text-foreground">
+                {condition}
+              </span>
             </motion.div>
           ))}
         </div>
@@ -58,25 +51,19 @@ export function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
-          className="mt-10"
+          className="mt-10 flex flex-col items-center gap-3 rounded-xl bg-primary px-6 py-6 text-center text-primary-foreground sm:flex-row sm:justify-between sm:text-left"
         >
-          <Card className="border-emerald-200 bg-emerald-700 text-emerald-50">
-            <CardContent className="flex flex-col items-center gap-3 py-5 text-center sm:flex-row sm:justify-between sm:text-left">
-              <div>
-                <p className="text-base font-semibold">
-                  Not sure if your condition needs a neurosurgeon?
-                </p>
-                <p className="text-sm text-emerald-100/90">
-                  Get an honest, no-pressure consultation from Dr. Abinash Kumar.
-                </p>
-              </div>
-              <BookLink
-                className="inline-flex h-10 items-center justify-center rounded-md bg-white px-5 text-sm font-semibold text-emerald-800 transition-colors hover:bg-emerald-50"
-              >
-                Book a Consultation
-              </BookLink>
-            </CardContent>
-          </Card>
+          <div>
+            <p className="text-base font-semibold">
+              Not sure if your condition needs a neurosurgeon?
+            </p>
+            <p className="text-sm text-primary-foreground/80">
+              Get an honest, no-pressure consultation from Dr. Abinash Kumar.
+            </p>
+          </div>
+          <BookLink className="inline-flex h-10 shrink-0 items-center justify-center rounded-md bg-background px-5 text-sm font-semibold text-primary transition-colors hover:bg-background/90">
+            Book a Consultation
+          </BookLink>
         </motion.div>
       </div>
     </section>

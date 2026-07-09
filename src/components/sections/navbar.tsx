@@ -26,7 +26,7 @@ function BrandLogo({ className }: { className?: string }) {
       className={cn("size-9", className)}
       aria-hidden="true"
     >
-      <circle cx="24" cy="24" r="22" fill="oklch(0.51 0.13 162)" />
+      <circle cx="24" cy="24" r="22" className="fill-primary" />
       <path
         d="M18 13c-3.2 0-5.5 2.4-5.5 5.3 0 1 .3 1.9.8 2.7-1.6.9-2.6 2.5-2.6 4.4 0 2.7 2.1 4.9 4.8 5 .2 2.4 2.3 4.4 4.8 4.4 1.7 0 3.2-.9 4-2.2.8 1.3 2.3 2.2 4 2.2 2.5 0 4.6-2 4.8-4.4 2.7-.1 4.8-2.3 4.8-5 0-1.9-1-3.5-2.6-4.4.5-.8.8-1.7.8-2.7 0-2.9-2.3-5.3-5.5-5.3-1.8 0-3.4.8-4.4 2.1-1-1.3-2.6-2.1-4.4-2.1h-1.2c-1.8 0-3.4.8-4.4 2.1-.6-.8-1.5-1.4-2.4-1.8"
         fill="white"
@@ -34,7 +34,7 @@ function BrandLogo({ className }: { className?: string }) {
       />
       <path
         d="M24 16.5v15M17 22h14M19 27.5h10"
-        stroke="oklch(0.51 0.13 162)"
+        className="stroke-primary"
         strokeWidth="1.4"
         strokeLinecap="round"
       />
@@ -58,14 +58,14 @@ export function Navbar() {
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "bg-background/90 backdrop-blur-md shadow-sm border-b border-border/60"
-          : "bg-background/70 backdrop-blur-sm"
+          ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border"
+          : "bg-background/70 backdrop-blur-sm border-b border-transparent"
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="#home"
-          className="flex items-center gap-2.5 group"
+          className="group flex items-center gap-2.5"
           aria-label={`${siteConfig.doctor.name} — home`}
         >
           <span className="transition-transform group-hover:scale-105">
@@ -75,7 +75,7 @@ export function Navbar() {
             <span className="text-sm font-bold tracking-tight text-foreground sm:text-base">
               {siteConfig.doctor.name}
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-wider text-emerald-700 sm:text-xs">
+            <span className="text-[10px] font-medium uppercase tracking-wider text-primary sm:text-xs">
               {siteConfig.doctor.title}
             </span>
           </span>
@@ -90,7 +90,7 @@ export function Navbar() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/60 hover:text-emerald-800"
+              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-primary"
             >
               {item.label}
             </Link>
@@ -105,7 +105,7 @@ export function Navbar() {
               <span>Emergency</span>
             </a>
           </Button>
-          <Button asChild size="sm" className="bg-emerald-700 hover:bg-emerald-800">
+          <Button asChild size="sm">
             <BookLink>
               <Calendar className="size-4" />
               <span>Book Appointment</span>
@@ -134,7 +134,7 @@ export function Navbar() {
                   <span className="text-sm font-bold text-foreground">
                     {siteConfig.doctor.name}
                   </span>
-                  <span className="text-[10px] font-medium uppercase tracking-wider text-emerald-700">
+                  <span className="text-[10px] font-medium uppercase tracking-wider text-primary">
                     {siteConfig.doctor.title}
                   </span>
                 </div>
@@ -150,7 +150,7 @@ export function Navbar() {
                     <SheetClose asChild>
                       <Link
                         href={item.href}
-                        className="flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-emerald-800"
+                        className="flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary hover:text-primary"
                       >
                         {item.label}
                         <ChevronRight className="size-4 text-muted-foreground" />
@@ -167,7 +167,7 @@ export function Navbar() {
                   </a>
                 </Button>
                 <SheetClose asChild>
-                  <Button asChild className="bg-emerald-700 hover:bg-emerald-800">
+                  <Button asChild>
                     <BookLink>
                       <Calendar className="size-4" />
                       Book Appointment
@@ -182,4 +182,3 @@ export function Navbar() {
     </header>
   );
 }
-

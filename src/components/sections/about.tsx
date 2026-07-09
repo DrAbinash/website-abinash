@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, Phone } from "lucide-react";
 
 import { siteConfig } from "@/config/site.config";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookLink } from "@/components/book-link";
 
@@ -13,11 +11,11 @@ export function About() {
   return (
     <section
       id="about"
-      className="bg-background py-16 sm:py-20 lg:py-24"
+      className="bg-background py-20 sm:py-28"
       aria-labelledby="about-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Photo */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -26,8 +24,7 @@ export function About() {
             transition={{ duration: 0.6 }}
             className="relative mx-auto w-full max-w-md"
           >
-            <div className="absolute -inset-3 -z-10 rounded-3xl bg-emerald-100" />
-            <div className="overflow-hidden rounded-3xl border-4 border-white bg-emerald-50 shadow-xl">
+            <div className="overflow-hidden rounded-2xl border border-border bg-secondary shadow-lg">
               <img
                 src={siteConfig.doctor.photo}
                 alt={`${siteConfig.doctor.name}, ${siteConfig.doctor.title}`}
@@ -35,8 +32,8 @@ export function About() {
                 loading="lazy"
               />
             </div>
-            <div className="absolute -bottom-5 -right-3 rounded-2xl border border-border bg-background p-4 shadow-lg sm:-right-5">
-              <div className="text-2xl font-extrabold text-emerald-700">
+            <div className="absolute -bottom-5 -right-3 rounded-xl border border-border bg-background p-4 shadow-lg sm:-right-5">
+              <div className="text-2xl font-extrabold text-primary">
                 {siteConfig.doctor.yearsOfExperience}+
               </div>
               <p className="text-xs text-muted-foreground">
@@ -52,16 +49,14 @@ export function About() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
           >
-            <Badge variant="secondary" className="mb-3 bg-emerald-100 text-emerald-800">
-              About the Doctor
-            </Badge>
+            <p className="eyebrow">About the Doctor</p>
             <h2
               id="about-heading"
-              className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
+              className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
             >
               {siteConfig.doctor.name}
             </h2>
-            <p className="mt-2 text-lg font-semibold text-emerald-800">
+            <p className="mt-2 text-lg font-semibold text-primary">
               {siteConfig.doctor.title}
             </p>
 
@@ -73,30 +68,25 @@ export function About() {
               ))}
             </div>
 
-            <Card className="mt-6 border-emerald-100 bg-emerald-50/50">
-              <CardContent className="py-4">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-emerald-800">
-                  Qualifications &amp; Training
-                </p>
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {siteConfig.doctor.qualifications.map((q) => (
-                    <li
-                      key={q}
-                      className="flex items-start gap-2 text-sm text-foreground"
-                    >
-                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-600" />
-                      <span>{q}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+            <div className="mt-6 rounded-xl border border-border bg-secondary/50 p-5">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">
+                Qualifications &amp; Training
+              </p>
+              <ul className="grid gap-2 sm:grid-cols-2">
+                {siteConfig.doctor.qualifications.map((q) => (
+                  <li
+                    key={q}
+                    className="flex items-start gap-2 text-sm text-foreground"
+                  >
+                    <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                    <span>{q}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button
-                asChild
-                className="bg-emerald-700 hover:bg-emerald-800"
-              >
+              <Button asChild>
                 <BookLink>
                   Book a Consultation
                   <ArrowRight className="size-4" />

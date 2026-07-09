@@ -14,9 +14,7 @@ import {
 
 import { siteConfig } from "@/config/site.config";
 import { useToast } from "@/hooks/use-toast";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -42,7 +40,7 @@ export function Contact() {
       value: siteConfig.contact.phone,
       href: `tel:${siteConfig.contact.phoneHref}`,
       note: "Mon–Sat, OPD hours",
-      accent: "text-emerald-700 bg-emerald-100",
+      accent: "text-primary bg-primary/10",
     },
     {
       icon: Mail,
@@ -50,7 +48,7 @@ export function Contact() {
       value: siteConfig.contact.email,
       href: `mailto:${siteConfig.contact.email}`,
       note: "We reply within 24 hours",
-      accent: "text-emerald-700 bg-emerald-100",
+      accent: "text-primary bg-primary/10",
     },
     {
       icon: MessageCircle,
@@ -58,7 +56,7 @@ export function Contact() {
       value: siteConfig.contact.phone,
       href: `https://wa.me/${siteConfig.contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(siteConfig.contact.whatsappMessage)}`,
       note: "Quick queries welcome",
-      accent: "text-emerald-700 bg-emerald-100",
+      accent: "text-primary bg-primary/10",
     },
   ];
 
@@ -120,17 +118,15 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="bg-emerald-50/40 py-16 sm:py-20 lg:py-24"
+      className="bg-secondary/40 py-20 sm:py-28"
       aria-labelledby="contact-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <Badge variant="secondary" className="mb-3 bg-emerald-100 text-emerald-800">
-            Get in Touch
-          </Badge>
+          <p className="eyebrow justify-center">Get in Touch</p>
           <h2
             id="contact-heading"
-            className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
+            className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
             Book an Appointment
           </h2>
@@ -150,27 +146,25 @@ export function Contact() {
             className="grid gap-4 sm:grid-cols-2 lg:col-span-2"
           >
             {contactCards.map((c) => (
-              <Card key={c.title} className="border-emerald-100">
-                <CardContent className="flex flex-col gap-2 py-4">
-                  <div
-                    className={`flex size-10 items-center justify-center rounded-xl ${c.accent}`}
-                  >
-                    <c.icon className="size-5" />
-                  </div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    {c.title}
-                  </p>
-                  <a
-                    href={c.href}
-                    target={c.href.startsWith("http") ? "_blank" : undefined}
-                    rel={c.href.startsWith("http") ? "noreferrer" : undefined}
-                    className="text-sm font-semibold text-foreground hover:text-emerald-700 hover:underline"
-                  >
-                    {c.value}
-                  </a>
-                  <p className="text-xs text-muted-foreground">{c.note}</p>
-                </CardContent>
-              </Card>
+              <div key={c.title} className="rounded-xl border border-border bg-card p-4">
+                <div
+                  className={`flex size-10 items-center justify-center rounded-lg ${c.accent}`}
+                >
+                  <c.icon className="size-5" />
+                </div>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  {c.title}
+                </p>
+                <a
+                  href={c.href}
+                  target={c.href.startsWith("http") ? "_blank" : undefined}
+                  rel={c.href.startsWith("http") ? "noreferrer" : undefined}
+                  className="text-sm font-semibold text-foreground hover:text-primary hover:underline"
+                >
+                  {c.value}
+                </a>
+                <p className="mt-0.5 text-xs text-muted-foreground">{c.note}</p>
+              </div>
             ))}
           </motion.div>
 
@@ -182,85 +176,83 @@ export function Contact() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-3"
           >
-            <Card className="border-emerald-100 shadow-sm">
-              <CardContent>
-                <form className="grid gap-4 sm:grid-cols-2" onSubmit={handleSubmit} noValidate>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="name">Full Name *</Label>
-                    <Input id="name" name="name" placeholder="Your name" autoComplete="name" required />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="phone">Phone Number *</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="+91 ..."
-                      autoComplete="tel"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="email">Email (optional)</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="you@example.com"
-                      autoComplete="email"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="subject">Subject</Label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      placeholder="e.g. Spine consultation"
-                    />
-                  </div>
-                  <div className="space-y-1.5 sm:col-span-2">
-                    <Label htmlFor="message">Message *</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="Briefly describe your symptoms or what you'd like to discuss with Dr. Abinash Kumar."
-                      rows={5}
-                      required
-                    />
-                  </div>
-                  <div className="sm:col-span-2">
-                    <Button
-                      type="submit"
-                      disabled={status === "submitting" || status === "success"}
-                      className="w-full bg-emerald-700 text-white hover:bg-emerald-800 disabled:opacity-70 sm:w-auto"
-                    >
-                      {status === "submitting" && (
-                        <>
-                          <Loader2 className="size-4 animate-spin" />
-                          Sending...
-                        </>
-                      )}
-                      {status === "success" && (
-                        <>
-                          <CheckCircle2 className="size-4" />
-                          Message Sent
-                        </>
-                      )}
-                      {(status === "idle" || status === "error") && (
-                        <>
-                          <Send className="size-4" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                    <p className="mt-2 text-xs text-muted-foreground">
-                      By submitting this form you agree to be contacted by our
-                      team. Your information is kept confidential.
-                    </p>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+              <form className="grid gap-4 sm:grid-cols-2" onSubmit={handleSubmit} noValidate>
+                <div className="space-y-1.5">
+                  <Label htmlFor="name">Full Name *</Label>
+                  <Input id="name" name="name" placeholder="Your name" autoComplete="name" required />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="+91 ..."
+                    autoComplete="tel"
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="email">Email (optional)</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    autoComplete="email"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input
+                    id="subject"
+                    name="subject"
+                    placeholder="e.g. Spine consultation"
+                  />
+                </div>
+                <div className="space-y-1.5 sm:col-span-2">
+                  <Label htmlFor="message">Message *</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    placeholder="Briefly describe your symptoms or what you'd like to discuss with Dr. Abinash Kumar."
+                    rows={5}
+                    required
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <Button
+                    type="submit"
+                    disabled={status === "submitting" || status === "success"}
+                    className="w-full disabled:opacity-70 sm:w-auto"
+                  >
+                    {status === "submitting" && (
+                      <>
+                        <Loader2 className="size-4 animate-spin" />
+                        Sending...
+                      </>
+                    )}
+                    {status === "success" && (
+                      <>
+                        <CheckCircle2 className="size-4" />
+                        Message Sent
+                      </>
+                    )}
+                    {(status === "idle" || status === "error") && (
+                      <>
+                        <Send className="size-4" />
+                        Send Message
+                      </>
+                    )}
+                  </Button>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    By submitting this form you agree to be contacted by our
+                    team. Your information is kept confidential.
+                  </p>
+                </div>
+              </form>
+            </div>
           </motion.div>
         </div>
       </div>

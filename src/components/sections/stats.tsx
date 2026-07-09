@@ -39,16 +39,9 @@ function Counter({
 
 export function Stats() {
   return (
-    <section
-      aria-label="Practice statistics"
-      className="relative overflow-hidden bg-emerald-700 text-emerald-50"
-    >
-      <div
-        className="absolute inset-0 bg-grid opacity-20"
-        aria-hidden="true"
-      />
-      <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+    <section aria-label="Practice statistics" className="border-y border-border bg-secondary/40">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:divide-x sm:divide-border">
           {siteConfig.stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -56,12 +49,12 @@ export function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="text-center"
+              className="text-center sm:px-4"
             >
-              <div className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
+              <div className="text-3xl font-extrabold tracking-tight text-primary sm:text-4xl md:text-5xl">
                 <Counter value={stat.value} suffix={stat.suffix} />
               </div>
-              <p className="mt-2 text-xs font-medium uppercase tracking-wider text-emerald-100/80 sm:text-sm">
+              <p className="mt-2 text-xs font-medium uppercase tracking-wider text-muted-foreground sm:text-sm">
                 {stat.label}
               </p>
             </motion.div>
