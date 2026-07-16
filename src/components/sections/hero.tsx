@@ -4,17 +4,20 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Ambulance, ShieldCheck, Star } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 import { Button } from "@/components/ui/button";
 import { BookLink } from "@/components/book-link";
 
-const trustItems = [
-  { icon: ShieldCheck, label: "M.Ch. Neurosurgery" },
-  { icon: Star, label: "10+ Years Experience" },
-  { icon: ShieldCheck, label: "24×7 Neurotrauma Cover" },
-];
+const TRUST_ICONS = [ShieldCheck, Star, ShieldCheck];
 
 export function Hero() {
+  const siteConfig = useSiteConfig();
+  const trustItems = siteConfig.hero.trustBadges.map((label, i) => ({
+    icon: TRUST_ICONS[i % TRUST_ICONS.length],
+    label,
+  }));
+  // The floating card shows the second statistic ("Neuro & Spine Surgeries").
+  const heroStat = siteConfig.stats[1] ?? siteConfig.stats[0];
   return (
     <section
       id="home"
@@ -88,7 +91,7 @@ export function Hero() {
             <Button asChild size="lg">
               <BookLink>
                 <Calendar className="size-4" />
-                Book Appointment
+                {siteConfig.booking.label}
               </BookLink>
             </Button>
             <Button asChild size="lg" variant="outline">
@@ -127,8 +130,8 @@ export function Hero() {
           >
             <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-xl shadow-primary/5">
               <img
-                src="/hero-brain.png"
-                alt="Illustration of the human brain symbolising neurosurgical care"
+                src={siteConfig.hero.image}
+                alt={siteConfig.hero.imageAlt}
                 className="aspect-[4/5] w-full object-cover sm:aspect-[5/4] md:aspect-[4/5]"
                 loading="eager"
               />
@@ -147,28 +150,31 @@ export function Hero() {
                   <Ambulance className="size-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Emergency</p>
+                  <p className="text-xs text-muted-foreground">
+                    {siteConfig.hero.floatingCardTitle}
+                  </p>
                   <p className="text-sm font-semibold text-foreground">
-                    24×7 Cover
+                    {siteConfig.hero.floatingCardText}
                   </p>
                 </div>
               </div>
             </motion.div>
 
             {/* Floating stat card bottom-right */}
-            <motion.div
-              initial={{ opacity: 0, x: 20, y: 10 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="absolute -right-4 bottom-6 hidden rounded-xl border border-border bg-background/95 p-4 shadow-xl backdrop-blur-sm sm:block"
-            >
-              <p className="text-2xl font-extrabold text-primary">
-                2000<span className="text-base align-top">+</span>
-              </p>
-              <p className="text-xs text-muted-foreground">
-                Neuro &amp; Spine Surgeries
-              </p>
-            </motion.div>
+            {heroStat && (
+              <motion.div
+                initial={{ opacity: 0, x: 20, y: 10 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="absolute -right-4 bottom-6 hidden rounded-xl border border-border bg-background/95 p-4 shadow-xl backdrop-blur-sm sm:block"
+              >
+                <p className="text-2xl font-extrabold text-primary">
+                  {heroStat.value.toLocaleString("en-IN")}
+                  <span className="text-base align-top">{heroStat.suffix}</span>
+                </p>
+                <p className="text-xs text-muted-foreground">{heroStat.label}</p>
+              </motion.div>
+            )}
           </motion.div>
         </div>
       </div>

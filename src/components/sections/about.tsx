@@ -3,11 +3,13 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, Phone } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 import { Button } from "@/components/ui/button";
 import { BookLink } from "@/components/book-link";
 
 export function About() {
+  const siteConfig = useSiteConfig();
+  if (siteConfig.sections.about.visible === false) return null;
   return (
     <section
       id="about"
@@ -49,7 +51,7 @@ export function About() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
           >
-            <p className="eyebrow">About the Doctor</p>
+            <p className="eyebrow">{siteConfig.sections.about.badge}</p>
             <h2
               id="about-heading"
               className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
@@ -88,7 +90,7 @@ export function About() {
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button asChild>
                 <BookLink>
-                  Book a Consultation
+                  {siteConfig.booking.shortLabel}
                   <ArrowRight className="size-4" />
                 </BookLink>
               </Button>

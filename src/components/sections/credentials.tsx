@@ -2,10 +2,13 @@
 
 import { motion } from "framer-motion";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 import { getIcon } from "@/components/icon-map";
 
 export function Credentials() {
+  const siteConfig = useSiteConfig();
+  const section = siteConfig.sections.credentials;
+  if (section.visible === false) return null;
   return (
     <section
       id="credentials"
@@ -14,16 +17,15 @@ export function Credentials() {
     >
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow justify-center">Education &amp; Credentials</p>
+          <p className="eyebrow justify-center">{section.badge}</p>
           <h2
             id="credentials-heading"
             className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
-            A Foundation of Rigorous Training
+            {section.heading}
           </h2>
           <p className="mt-3 text-pretty text-muted-foreground">
-            Years of dedicated surgical and super-specialty training form the
-            backbone of safe, evidence-based neurosurgical care.
+            {section.subheading}
           </p>
         </div>
 

@@ -5,7 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Menu, Phone, Calendar, Ambulance, ChevronRight } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
+import { useVisibleNav } from "@/lib/visible-nav";
 import { cn } from "@/lib/utils";
 import { BookLink } from "@/components/book-link";
 import { Button } from "@/components/ui/button";
@@ -43,6 +44,8 @@ function BrandLogo({ className }: { className?: string }) {
 }
 
 export function Navbar() {
+  const siteConfig = useSiteConfig();
+  const nav = useVisibleNav();
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -86,7 +89,7 @@ export function Navbar() {
           className="hidden items-center gap-1 lg:flex"
           aria-label="Primary navigation"
         >
-          {siteConfig.nav.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -108,7 +111,7 @@ export function Navbar() {
           <Button asChild size="sm">
             <BookLink>
               <Calendar className="size-4" />
-              <span>Book Appointment</span>
+              <span>{siteConfig.booking.label}</span>
             </BookLink>
           </Button>
         </div>
@@ -140,7 +143,7 @@ export function Navbar() {
                 </div>
               </div>
               <nav className="flex flex-col gap-1 px-3 py-4" aria-label="Mobile navigation">
-                {siteConfig.nav.map((item, i) => (
+                {nav.map((item, i) => (
                   <motion.div
                     key={item.href}
                     initial={{ opacity: 0, x: 20 }}
@@ -170,7 +173,7 @@ export function Navbar() {
                   <Button asChild>
                     <BookLink>
                       <Calendar className="size-4" />
-                      Book Appointment
+                      {siteConfig.booking.label}
                     </BookLink>
                   </Button>
                 </SheetClose>

@@ -1,0 +1,69 @@
+import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { COOKIE_NAME, isValidSessionToken } from "@/lib/admin-auth";
+import {
+  getSiteSettings,
+  saveSiteSettings,
+  resetSiteSettings,
+} from "@/lib/site-settings";
+import { siteConfig } from "@/config/site.config";
+
+export const dynamic = "force-dynamic";
+
+async function isAuthenticated(): Promise<boolean> {
+  const store = await cookies();
+  return isValidSessionToken(store.get(COOKIE_NAME)?.value);
+}
+
+export async function GET() {
+  if (!(await isAuthenticated())) {
+    return NextResponse.json({ ok: false, error: "Not logged in" }, { status: 401 });
+  }
+  const settings = await getSiteSettings();
+  return NextResponse.json({ ok: true, settings, defaults: siteConfig });
+}
+
+export async function PUT(request: Request) {
+  if (!(await isAuthenticated())) {
+    return NextResponse.json({ ok: false, error: "Not logged in" }, { status: 401 });
+  }
+
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
+  }
+
+  if (typeof body !== "object" || body === null || Array.isArray(body)) {
+    return NextResponse.json({ ok: false, error: "Settings must be an object" }, { status: 422 });
+  }
+
+  try {
+    await saveSiteSettings(body as Record<string, unknown>);
+  } catch (error) {
+    console.error("[admin/settings] save failed", error);
+    return NextResponse.json({ ok: false, error: "Could not save settings" }, { status: 500 });
+  }
+
+  // Rebuild the statically-cached pages so the saved changes (content,
+  // headings, hidden sections) appear on the very next page load.
+  revalidatePath("/", "layout");
+
+  return NextResponse.json({ ok: true });
+}
+
+export async function DELETE() {
+  if (!(await isAuthenticated())) {
+    return NextResponse.json({ ok: false, error: "Not logged in" }, { status: 401 });
+  }
+  try {
+    await resetSiteSettings();
+  } catch (error) {
+    console.error("[admin/settings] reset failed", error);
+    return NextResponse.json({ ok: false, error: "Could not reset settings" }, { status: 500 });
+  }
+  revalidatePath("/", "layout");
+  return NextResponse.json({ ok: true });
+}

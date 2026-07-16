@@ -3,7 +3,7 @@
 import * as React from "react";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 
 function Counter({
   value,
@@ -38,6 +38,8 @@ function Counter({
 }
 
 export function Stats() {
+  const siteConfig = useSiteConfig();
+  if (siteConfig.sections.stats.visible === false) return null;
   return (
     <section aria-label="Practice statistics" className="border-y border-border bg-secondary/40">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">

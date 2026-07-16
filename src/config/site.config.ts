@@ -1,4 +1,24 @@
 export const siteConfig = {
+  /**
+   * Text on the Book buttons. Where they LINK to is the "Booking URL" in
+   * the on-page gear panel (SiteSettings.bookingUrl) — empty means the
+   * in-page contact form.
+   */
+  booking: {
+    label: "Book Appointment",
+    shortLabel: "Book a Consultation",
+  },
+  hero: {
+    image: "/hero-brain.png",
+    imageAlt: "Illustration of the human brain symbolising neurosurgical care",
+    floatingCardTitle: "Emergency",
+    floatingCardText: "24×7 Cover",
+    trustBadges: [
+      "M.Ch. Neurosurgery",
+      "10+ Years Experience",
+      "24×7 Neurotrauma Cover",
+    ],
+  },
   doctor: {
     name: "Dr. Abinash Kumar",
     prefix: "Dr.",
@@ -98,7 +118,81 @@ export const siteConfig = {
     { label: "Location", href: "#location" },
     { label: "Contact", href: "#contact" },
   ],
+  /**
+   * Per-section controls: hide a section entirely, or reword its badge,
+   * heading, and sub-heading — all editable from /admin → Design & Layout.
+   */
+  sections: {
+    stats: { visible: true },
+    about: { visible: true, badge: "About the Doctor" },
+    expertise: {
+      visible: true,
+      badge: "Areas of Expertise",
+      heading: "Specialized Neurosurgical Care",
+      subheading:
+        "Comprehensive expertise across brain, spine, and neurotrauma — delivered with precision and compassion.",
+    },
+    highlights: {
+      visible: true,
+      badge: "Why Choose Us",
+      heading: "Care That Puts Patients First",
+      subheading:
+        "Every decision is guided by safety, precision, and the patient's long-term wellbeing.",
+    },
+    services: {
+      visible: true,
+      badge: "Conditions Treated",
+      heading: "Comprehensive Neurosurgical Services",
+      subheading:
+        "From complex brain tumours to chronic back pain — expert diagnosis and surgical care for the full spectrum of neurosurgical conditions.",
+      ctaTitle: "Not sure if your condition needs a neurosurgeon?",
+      ctaText: "Get an honest, no-pressure consultation from Dr. Abinash Kumar.",
+    },
+    facilities: {
+      visible: true,
+      badge: "Our Facilities",
+      heading: "Modern Infrastructure for Safe Outcomes",
+      subheading:
+        "A fully equipped multi-speciality hospital with advanced operating theatres, neuro-ICU, and patient-friendly consultation spaces.",
+    },
+    credentials: {
+      visible: true,
+      badge: "Education & Credentials",
+      heading: "A Foundation of Rigorous Training",
+      subheading:
+        "Years of dedicated surgical and super-specialty training form the backbone of safe, evidence-based neurosurgical care.",
+    },
+    location: {
+      visible: true,
+      badge: "Location & Hours",
+      heading: "Find Us in Deoghar",
+      subheading:
+        "Conveniently located in Castairs Town, Deoghar — serving the people of Jharkhand with round-the-clock neurotrauma care.",
+    },
+    contact: {
+      visible: true,
+      badge: "Get in Touch",
+      heading: "Book an Appointment",
+      subheading:
+        "Send us a message and our team will get back to you to schedule your consultation with Dr. Abinash Kumar.",
+    },
+  },
+  footer: {
+    creditLine: "Designed for Dr. Abinash Kumar, Consultant Neurosurgeon",
+  },
+  seo: {
+    keywords: [
+      "Neurosurgeon Deoghar",
+      "Dr Abinash Kumar",
+      "Neurosurgery Jharkhand",
+      "Brain surgery Deoghar",
+      "Spine surgery Deoghar",
+      "Head injury treatment",
+      "Hope NeuroTrauma Hospital",
+    ],
+  },
+  /** Site-wide green branding (color presets live in the gear panel). */
   theme: { primary: "#047857", primaryDark: "#065f46", accent: "#d97706" },
-} as const;
+};
 
 export type SiteConfig = typeof siteConfig;

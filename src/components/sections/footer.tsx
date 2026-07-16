@@ -13,7 +13,8 @@ import {
   Twitter,
 } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
+import { useVisibleNav } from "@/lib/visible-nav";
 
 function BrandLogo({ className }: { className?: string }) {
   return (
@@ -41,6 +42,8 @@ function BrandLogo({ className }: { className?: string }) {
 }
 
 export function Footer() {
+  const siteConfig = useSiteConfig();
+  const nav = useVisibleNav();
   const socialLinks = [
     { icon: Facebook, href: siteConfig.social.facebook, label: "Facebook" },
     { icon: Instagram, href: siteConfig.social.instagram, label: "Instagram" },
@@ -78,7 +81,7 @@ export function Footer() {
               Quick Links
             </p>
             <ul className="mt-4 space-y-2">
-              {siteConfig.nav.map((item) => (
+              {nav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -175,8 +178,14 @@ export function Footer() {
             © {new Date().getFullYear()} {siteConfig.hospital.name}. All rights
             reserved.
           </p>
-          <p>
-            Designed for {siteConfig.doctor.name}, {siteConfig.doctor.title}
+          <p className="flex items-center gap-3">
+            <span>{siteConfig.footer.creditLine}</span>
+            <Link
+              href="/admin"
+              className="rounded text-primary-foreground/60 underline-offset-2 transition-colors hover:text-primary-foreground hover:underline"
+            >
+              Site settings
+            </Link>
           </p>
         </div>
       </div>

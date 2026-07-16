@@ -12,7 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,8 @@ import { Label } from "@/components/ui/label";
 type Status = "idle" | "submitting" | "success" | "error";
 
 export function Contact() {
+  const siteConfig = useSiteConfig();
+  const section = siteConfig.sections.contact;
   const { toast } = useToast();
   const [status, setStatus] = React.useState<Status>("idle");
 
@@ -115,6 +117,8 @@ export function Contact() {
     }
   }
 
+  if (section.visible === false) return null;
+
   return (
     <section
       id="contact"
@@ -123,16 +127,15 @@ export function Contact() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow justify-center">Get in Touch</p>
+          <p className="eyebrow justify-center">{section.badge}</p>
           <h2
             id="contact-heading"
             className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
-            Book an Appointment
+            {section.heading}
           </h2>
           <p className="mt-3 text-pretty text-muted-foreground">
-            Send us a message and our team will get back to you to schedule your
-            consultation with Dr. Abinash Kumar.
+            {section.subheading}
           </p>
         </div>
 
@@ -216,7 +219,7 @@ export function Contact() {
                   <Textarea
                     id="message"
                     name="message"
-                    placeholder="Briefly describe your symptoms or what you'd like to discuss with Dr. Abinash Kumar."
+                    placeholder={`Briefly describe your symptoms or what you'd like to discuss with ${siteConfig.doctor.name}.`}
                     rows={5}
                     required
                   />

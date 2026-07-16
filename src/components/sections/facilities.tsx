@@ -3,9 +3,12 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 
 export function Facilities() {
+  const siteConfig = useSiteConfig();
+  const section = siteConfig.sections.facilities;
+  if (section.visible === false) return null;
   return (
     <section
       id="facilities"
@@ -14,16 +17,15 @@ export function Facilities() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow justify-center">Our Facilities</p>
+          <p className="eyebrow justify-center">{section.badge}</p>
           <h2
             id="facilities-heading"
             className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
-            Modern Infrastructure for Safe Outcomes
+            {section.heading}
           </h2>
           <p className="mt-3 text-pretty text-muted-foreground">
-            A fully equipped multi-speciality hospital with advanced operating
-            theatres, neuro-ICU, and patient-friendly consultation spaces.
+            {section.subheading}
           </p>
         </div>
 

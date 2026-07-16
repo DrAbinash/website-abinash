@@ -58,8 +58,8 @@ radiology-zai/
 
 # Sandbox artifacts
 agent-ctx/
-download/
-upload/
+/download/
+/upload/
 worklog.md
 dev.log
 

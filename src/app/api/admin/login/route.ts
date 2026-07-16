@@ -16,7 +16,11 @@ export async function POST(request: Request) {
   }
 
   const token = getSessionToken()!;
-  const res = NextResponse.redirect(new URL("/admin/enquiries", request.url));
+  // Optional "next" field: return to the page that sent the user to login.
+  // Restricted to /admin paths so it can't be abused as an open redirect.
+  const next = String(form?.get("next") ?? "");
+  const target = next.startsWith("/admin") ? next : "/admin/enquiries";
+  const res = NextResponse.redirect(new URL(target, request.url));
   res.cookies.set(COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
