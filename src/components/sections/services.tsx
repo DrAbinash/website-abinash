@@ -3,10 +3,13 @@
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 import { BookLink } from "@/components/book-link";
 
 export function Services() {
+  const siteConfig = useSiteConfig();
+  const section = siteConfig.sections.services;
+  if (section.visible === false) return null;
   return (
     <section
       id="services"
@@ -15,16 +18,15 @@ export function Services() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow justify-center">Conditions Treated</p>
+          <p className="eyebrow justify-center">{section.badge}</p>
           <h2
             id="services-heading"
             className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
-            Comprehensive Neurosurgical Services
+            {section.heading}
           </h2>
           <p className="mt-3 text-pretty text-muted-foreground">
-            From complex brain tumours to chronic back pain — expert diagnosis
-            and surgical care for the full spectrum of neurosurgical conditions.
+            {section.subheading}
           </p>
         </div>
 
@@ -54,15 +56,11 @@ export function Services() {
           className="mt-10 flex flex-col items-center gap-3 rounded-xl bg-primary px-6 py-6 text-center text-primary-foreground sm:flex-row sm:justify-between sm:text-left"
         >
           <div>
-            <p className="text-base font-semibold">
-              Not sure if your condition needs a neurosurgeon?
-            </p>
-            <p className="text-sm text-primary-foreground/80">
-              Get an honest, no-pressure consultation from Dr. Abinash Kumar.
-            </p>
+            <p className="text-base font-semibold">{section.ctaTitle}</p>
+            <p className="text-sm text-primary-foreground/80">{section.ctaText}</p>
           </div>
           <BookLink className="inline-flex h-10 shrink-0 items-center justify-center rounded-md bg-background px-5 text-sm font-semibold text-primary transition-colors hover:bg-background/90">
-            Book a Consultation
+            {siteConfig.booking.shortLabel}
           </BookLink>
         </motion.div>
       </div>

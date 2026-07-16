@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Ambulance, ArrowUpRight } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 
 export function Location() {
+  const siteConfig = useSiteConfig();
+  const section = siteConfig.sections.location;
   const contactCards = [
     {
       icon: MapPin,
@@ -34,6 +36,8 @@ export function Location() {
     },
   ];
 
+  if (section.visible === false) return null;
+
   return (
     <section
       id="location"
@@ -42,16 +46,15 @@ export function Location() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow justify-center">Location &amp; Hours</p>
+          <p className="eyebrow justify-center">{section.badge}</p>
           <h2
             id="location-heading"
             className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
-            Find Us in Deoghar
+            {section.heading}
           </h2>
           <p className="mt-3 text-pretty text-muted-foreground">
-            Conveniently located in Castairs Town, Deoghar — serving the people
-            of Jharkhand with round-the-clock neurotrauma care.
+            {section.subheading}
           </p>
         </div>
 
@@ -65,7 +68,7 @@ export function Location() {
             className="overflow-hidden rounded-xl border border-border shadow-sm"
           >
             <iframe
-              title="Map showing the location of Hope NeuroTrauma Hospital, Deoghar"
+              title={`Map showing the location of ${siteConfig.hospital.shortName}`}
               src={siteConfig.hospital.mapEmbedUrl}
               className="h-72 w-full sm:h-full"
               loading="lazy"

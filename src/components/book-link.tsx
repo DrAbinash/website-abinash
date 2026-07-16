@@ -10,9 +10,11 @@ import { useEffect, useState } from "react";
 export function BookLink({
   children,
   className,
+  "aria-label": ariaLabel,
 }: {
   children: React.ReactNode;
   className?: string;
+  "aria-label"?: string;
 }) {
   const [url, setUrl] = useState<string | null>(null);
 
@@ -32,13 +34,14 @@ export function BookLink({
         target="_blank"
         rel="noopener noreferrer"
         className={className}
+        aria-label={ariaLabel}
       >
         {children}
       </a>
     );
   }
   return (
-    <a href="#contact" className={className}>
+    <a href="#contact" className={className} aria-label={ariaLabel}>
       {children}
     </a>
   );

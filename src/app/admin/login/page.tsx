@@ -3,9 +3,11 @@ export const dynamic = "force-dynamic";
 export default async function AdminLoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; next?: string }>;
 }) {
-  const { error } = await searchParams;
+  const { error, next } = await searchParams;
+  // Only forward /admin-internal destinations (no open redirects).
+  const safeNext = next && next.startsWith("/admin") ? next : "";
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-emerald-50/40 px-4">
@@ -29,6 +31,7 @@ export default async function AdminLoginPage({
         )}
 
         <form action="/api/admin/login" method="POST" className="mt-6 space-y-4">
+          {safeNext && <input type="hidden" name="next" value={safeNext} />}
           <div>
             <label htmlFor="password" className="text-sm font-medium text-foreground">
               Password

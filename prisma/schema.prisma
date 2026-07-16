@@ -58,3 +58,12 @@ model SiteSettings {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
+
+// Stores the admin-edited website content as a single JSON blob that
+// overrides the defaults in src/config/site.config.ts.
+// There is only ever one row, with id = "site". Edited from /admin.
+model SiteSetting {
+  id        String   @id
+  json      String
+  updatedAt DateTime @updatedAt
+}

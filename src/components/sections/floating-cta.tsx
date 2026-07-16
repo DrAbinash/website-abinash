@@ -2,11 +2,13 @@
 
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone, MessageCircle, CalendarCheck } from "lucide-react";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
+import { BookLink } from "@/components/book-link";
 
 export function FloatingCta() {
+  const siteConfig = useSiteConfig();
   const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
@@ -29,6 +31,12 @@ export function FloatingCta() {
           className="fixed bottom-4 right-4 z-40 flex flex-col gap-3 lg:hidden"
           aria-label="Quick contact actions"
         >
+          <BookLink
+            aria-label={siteConfig.booking.label}
+            className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-105"
+          >
+            <CalendarCheck className="size-5" />
+          </BookLink>
           <a
             href={waHref}
             target="_blank"

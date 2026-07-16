@@ -2,10 +2,13 @@
 
 import { motion } from "framer-motion";
 
-import { siteConfig } from "@/config/site.config";
+import { useSiteConfig } from "@/components/site-config-context";
 import { getIcon } from "@/components/icon-map";
 
 export function Expertise() {
+  const siteConfig = useSiteConfig();
+  const section = siteConfig.sections.expertise;
+  if (section.visible === false) return null;
   return (
     <section
       id="expertise"
@@ -14,16 +17,15 @@ export function Expertise() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow justify-center">Areas of Expertise</p>
+          <p className="eyebrow justify-center">{section.badge}</p>
           <h2
             id="expertise-heading"
             className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl"
           >
-            Specialized Neurosurgical Care
+            {section.heading}
           </h2>
           <p className="mt-3 text-pretty text-muted-foreground">
-            Comprehensive expertise across brain, spine, and neurotrauma —
-            delivered with precision and compassion.
+            {section.subheading}
           </p>
         </div>
 
