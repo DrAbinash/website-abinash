@@ -101,6 +101,27 @@ export const siteConfig = {
     { image: "/gallery-consult.jpg", title: "Consultation & Diagnosis", description: "Patient-friendly consultation rooms for thorough examination, diagnosis, and honest treatment planning." },
     { image: "/gallery-hospital.jpg", title: "Multi Speciality Hospital", description: "A fully equipped multi speciality hospital serving the people of Deoghar and surrounding regions of Jharkhand." },
   ],
+  /**
+   * Photo gallery — one or more albums, each shown as a card on the homepage
+   * that opens its own /gallery/<slug> page. Add albums and upload photos
+   * from /admin → Gallery. `slug` is the permanent URL for an album.
+   */
+  gallery: {
+    collections: [
+      {
+        slug: "clinic",
+        title: "Clinic & Facilities",
+        subtitle: "A look inside our operation theatre, ICU, and consultation spaces.",
+        layout: "masonry",
+        photos: [
+          { src: "/gallery-ot.jpg", caption: "Modern operation theatre" },
+          { src: "/gallery-icu.jpg", caption: "Critical care & ICU" },
+          { src: "/gallery-consult.jpg", caption: "Consultation & diagnosis" },
+          { src: "/gallery-hospital.jpg", caption: "Multi speciality hospital" },
+        ],
+      },
+    ],
+  },
   stats: [
     { label: "Years of Neurosurgical Experience", value: 10, suffix: "+" },
     { label: "Neuro & Spine Surgeries", value: 2000, suffix: "+" },
@@ -114,6 +135,7 @@ export const siteConfig = {
     { label: "Expertise", href: "#expertise" },
     { label: "Services", href: "#services" },
     { label: "Facilities", href: "#facilities" },
+    { label: "Gallery", href: "#gallery" },
     { label: "Credentials", href: "#credentials" },
     { label: "Location", href: "#location" },
     { label: "Contact", href: "#contact" },
@@ -154,6 +176,13 @@ export const siteConfig = {
       heading: "Modern Infrastructure for Safe Outcomes",
       subheading:
         "A fully equipped multi-speciality hospital with advanced operating theatres, neuro-ICU, and patient-friendly consultation spaces.",
+    },
+    gallery: {
+      visible: true,
+      badge: "Gallery",
+      heading: "Photo Gallery",
+      subheading:
+        "A glimpse of our facilities, team, and the care we provide — browse the albums below.",
     },
     credentials: {
       visible: true,
