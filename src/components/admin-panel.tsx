@@ -391,7 +391,11 @@ function SettingsTab({
   ][];
 
   const fields: { key: string; label: string }[] = [
-    { key: "bookingUrl", label: "Online Booking URL (empty = use in-app form)" },
+    {
+      key: "bookingUrl",
+      label:
+        "Online Booking URL (empty = /book → caredeoghar.com; use #contact for the in-page form)",
+    },
     { key: "whatsapp", label: "WhatsApp Number (with country code)" },
     { key: "phone", label: "Phone (with country code)" },
     { key: "adminPassword", label: "Admin Password (min 4 chars)" },
