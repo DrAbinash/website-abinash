@@ -10,10 +10,11 @@ export const dynamic = "force-dynamic";
  * payment to the Care ERP (caredeoghar.com), which runs the ICICI Orange Pay
  * gateway — so we keep one stable /book link here and never handle card data.
  *
- * The target is configurable via CARE_BOOKING_URL. We tag source=abinash so
- * Care can attribute the booking (it records the source on the booking notes)
- * and brand the page, and we pass through any incoming query params — e.g.
- * /book?packageCode=ABINASH to deep-link a specific package.
+ * The target is configurable via CARE_BOOKING_URL. We tag source=hope so
+ * patients land on Care's existing Hope-branded booking page (Hope's tests and
+ * co-branding) rather than a separate one for this site, and we pass through
+ * any incoming query params — e.g. /book?packageCode=HOPE to deep-link Hope's
+ * package.
  */
 export async function GET(req: NextRequest) {
   const base = process.env.CARE_BOOKING_URL || "https://caredeoghar.com/book";
@@ -26,7 +27,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(base, 302);
   }
   if (!target.searchParams.has("source")) {
-    target.searchParams.set("source", process.env.CARE_BOOKING_SOURCE || "abinash");
+    target.searchParams.set("source", process.env.CARE_BOOKING_SOURCE || "hope");
   }
   req.nextUrl.searchParams.forEach((v, k) => {
     if (!target.searchParams.has(k)) target.searchParams.set(k, v);
