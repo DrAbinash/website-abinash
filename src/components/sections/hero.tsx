@@ -134,6 +134,7 @@ export function Hero() {
                 alt={siteConfig.hero.imageAlt}
                 className="aspect-[4/5] w-full object-cover sm:aspect-[5/4] md:aspect-[4/5]"
                 loading="eager"
+                fetchPriority="high"
               />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1.5 bg-primary" />
             </div>

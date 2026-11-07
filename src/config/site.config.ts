@@ -32,7 +32,7 @@ export const siteConfig = {
       "He manages the full spectrum of neurosurgical conditions — from complex brain tumours and spinal disorders to head injuries, stroke, and paediatric neurosurgical problems. His practice emphasizes minimally invasive techniques that mean smaller incisions, less pain, and faster recovery for patients.",
       "At Hope NeuroTrauma & Multi Speciality Hospital, Deoghar, Dr. Kumar leads a dedicated neurotrauma and spine programme, providing round-the-clock emergency neurosurgical cover for critically injured patients.",
     ],
-    photo: "/doctor-photo.png",
+    photo: "/doctor-photo.webp",
     yearsOfExperience: 10,
   },
   hospital: {
@@ -113,10 +113,10 @@ export const siteConfig = {
     { icon: "Users", title: "Multidisciplinary Team", description: "Collaboration with neurology, critical care, anaesthesia & rehabilitation." },
   ],
   facilities: [
-    { image: "/gallery-ot.jpg", title: "Modern Operation Theatre", description: "State-of-the-art operating theatre equipped with surgical microscope and neuro-monitoring for safe brain & spine surgery." },
-    { image: "/gallery-icu.jpg", title: "Critical Care & ICU", description: "Dedicated neuro-ICU with advanced monitoring, ventilators, and 24×7 critical care for neurotrauma and post-operative patients." },
-    { image: "/gallery-consult.jpg", title: "Consultation & Diagnosis", description: "Patient-friendly consultation rooms for thorough examination, diagnosis, and honest treatment planning." },
-    { image: "/gallery-hospital.jpg", title: "Multi Speciality Hospital", description: "A fully equipped multi speciality hospital serving the people of Deoghar and surrounding regions of Jharkhand." },
+    { image: "/gallery-ot.webp", title: "Modern Operation Theatre", description: "State-of-the-art operating theatre equipped with surgical microscope and neuro-monitoring for safe brain & spine surgery." },
+    { image: "/gallery-icu.webp", title: "Critical Care & ICU", description: "Dedicated neuro-ICU with advanced monitoring, ventilators, and 24×7 critical care for neurotrauma and post-operative patients." },
+    { image: "/gallery-consult.webp", title: "Consultation & Diagnosis", description: "Patient-friendly consultation rooms for thorough examination, diagnosis, and honest treatment planning." },
+    { image: "/gallery-hospital.webp", title: "Multi Speciality Hospital", description: "A fully equipped multi speciality hospital serving the people of Deoghar and surrounding regions of Jharkhand." },
   ],
   stats: [
     { label: "Years of Neurosurgical Experience", value: 10, suffix: "+" },
