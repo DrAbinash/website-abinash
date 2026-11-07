@@ -451,6 +451,23 @@ export function SiteEditor() {
                     onChange={(v) => mutate((d) => (d.hospital.address.full = v))}
                   />
                 </div>
+                <div className="sm:col-span-2">
+                  <TextField
+                    label="Hospital website link"
+                    value={settings.hospital.websiteUrl}
+                    onChange={(v) => mutate((d) => (d.hospital.websiteUrl = v))}
+                    hint="The hospital's own website — shown on every page and sent to Google as the hospital's official address"
+                    placeholder="https://..."
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <KeywordsField
+                    label="Areas served (towns and districts, separate with commas)"
+                    hint="Shown on the hospital page and sent to Google as the area the hospital covers."
+                    value={settings.hospital.areaServed}
+                    onChange={(arr) => mutate((d) => (d.hospital.areaServed = arr))}
+                  />
+                </div>
               </CardContent>
             </Card>
 
@@ -459,6 +476,22 @@ export function SiteEditor() {
                 <CardTitle className="text-base">Google Maps</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <TextField
+                    label="Map latitude"
+                    value={settings.hospital.address.latitude}
+                    onChange={(v) => mutate((d) => (d.hospital.address.latitude = v))}
+                    hint="Google Maps: right-click the hospital entrance — first number. Sent to Google as the exact pin; leave empty to skip."
+                    placeholder="e.g. 24.4857"
+                  />
+                  <TextField
+                    label="Map longitude"
+                    value={settings.hospital.address.longitude}
+                    onChange={(v) => mutate((d) => (d.hospital.address.longitude = v))}
+                    hint="Second number from the same right-click."
+                    placeholder="e.g. 86.6927"
+                  />
+                </div>
                 <TextAreaField
                   label="Map embed link (the map shown on the website)"
                   value={settings.hospital.mapEmbedUrl}
@@ -920,6 +953,19 @@ export function SiteEditor() {
                   value={settings.seo.keywords}
                   onChange={(arr) => mutate((d) => (d.seo.keywords = arr))}
                 />
+                <TextField
+                  label="Google Business Profile link"
+                  value={settings.seo.googleBusinessProfileUrl}
+                  onChange={(v) => mutate((d) => (d.seo.googleBusinessProfileUrl = v))}
+                  hint="Ties this website to your Google Business Profile and its reviews. Copy the address from your profile's “Share” button."
+                  placeholder="https://..."
+                />
+                <TextField
+                  label="Cloudflare Web Analytics token"
+                  value={settings.seo.cloudflareAnalyticsToken}
+                  onChange={(v) => mutate((d) => (d.seo.cloudflareAnalyticsToken = v))}
+                  hint="The token from your Cloudflare Web Analytics site. Leave empty to turn visitor statistics off."
+                />
               </CardContent>
             </Card>
 
@@ -993,9 +1039,13 @@ function parseKeywords(raw: string): string[] {
 function KeywordsField({
   value,
   onChange,
+  label = "Search keywords (separate with commas)",
+  hint = "Helps Google understand what the website is about.",
 }: {
   value: string[];
   onChange: (v: string[]) => void;
+  label?: string;
+  hint?: string;
 }) {
   const [raw, setRaw] = React.useState(value.join(", "));
   const [lastValue, setLastValue] = React.useState(value);
@@ -1008,14 +1058,14 @@ function KeywordsField({
   }
   return (
     <TextAreaField
-      label="Search keywords (separate with commas)"
+      label={label}
       rows={3}
       value={raw}
       onChange={(v) => {
         setRaw(v);
         onChange(parseKeywords(v));
       }}
-      hint="Helps Google understand what the website is about."
+      hint={hint}
     />
   );
 }
