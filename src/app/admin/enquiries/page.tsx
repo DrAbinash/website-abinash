@@ -9,7 +9,7 @@ export default async function AdminEnquiriesPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
 
-  if (!isValidSessionToken(token)) {
+  if (!(await isValidSessionToken(token))) {
     redirect("/admin/login");
   }
 

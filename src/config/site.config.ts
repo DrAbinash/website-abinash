@@ -1,13 +1,17 @@
 export const siteConfig = {
-  /**
-   * Text on the Book buttons. Where they LINK to is the "Booking URL" in
-   * the on-page gear panel (SiteSettings.bookingUrl) — empty means the
-   * in-page contact form.
-   */
+  /** Text on the Book buttons. Where they link is bookingUrl below. */
   booking: {
     label: "Book Appointment",
     shortLabel: "Book a Consultation",
   },
+  /**
+   * Where the Book buttons go. Empty = /book, which redirects to the
+   * hospital's online booking (payment) page; "#contact" = the in-page
+   * enquiry form; any other full URL overrides both.
+   */
+  bookingUrl: "",
+  /** Colour theme name: emerald | rose | amber | burgundy. */
+  primaryColor: "emerald",
   hero: {
     image: "/hero-brain.png",
     imageAlt: "Illustration of the human brain symbolising neurosurgical care",

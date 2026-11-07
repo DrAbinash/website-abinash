@@ -21,7 +21,7 @@ const MAX_BYTES = 8 * 1024 * 1024;
 
 export async function POST(request: Request) {
   const store = await cookies();
-  if (!isValidSessionToken(store.get(COOKIE_NAME)?.value)) {
+  if (!(await isValidSessionToken(store.get(COOKIE_NAME)?.value))) {
     return NextResponse.json({ ok: false, error: "Not logged in" }, { status: 401 });
   }
 

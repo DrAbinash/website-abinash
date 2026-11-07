@@ -15,7 +15,6 @@ import { PageHero } from "@/components/pages/page-hero";
 import { FaqBlock } from "@/components/pages/faq-block";
 import { Contact } from "@/components/sections/contact";
 import { getSiteSettings } from "@/lib/site-settings";
-import { getBookingUrl } from "@/lib/settings";
 import { pageMetadata } from "@/lib/seo";
 import { contactPage } from "@/content/pages";
 
@@ -38,8 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ContactPage() {
   const config = await getSiteSettings();
-  const { hospital, contact, timings } = config;
-  const bookingUrl = await getBookingUrl();
+  const { hospital, contact, timings, bookingUrl } = config;
   const heading = `Contact & Appointments in ${hospital.address.city}`;
   // The Book button leaves the site by default (the /book redirect), so the
   // online-booking FAQ applies unless the admin pointed it at the in-page form.
