@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import type { EditableSiteConfig } from "@/lib/site-settings";
+import { absoluteUrl, getSiteUrl } from "@/lib/site-url";
 
 /** Google shows roughly 60 characters of a title and 155 of a description. */
 const TITLE_LIMIT = 60;
@@ -39,6 +41,51 @@ export function homeDescription(config: EditableSiteConfig): string {
  */
 export function pageTitleTemplate(config: EditableSiteConfig): string {
   return `%s | ${config.doctor.name}`;
+}
+
+/**
+ * The full metadata block for one page: title, description, canonical, and
+ * the share card. Every field is set here rather than inherited from the root
+ * layout, so a page can never end up pointing its canonical or og:url at the
+ * homepage.
+ *
+ * `fullTitle` is for the homepage, whose title already contains the doctor's
+ * name and must not have the template applied a second time.
+ */
+export function pageMetadata(
+  config: EditableSiteConfig,
+  options: {
+    path: string;
+    title: string;
+    description: string;
+    keywords?: string[];
+    fullTitle?: boolean;
+  }
+): Metadata {
+  const shareImage = absoluteUrl(config.seo.ogImage);
+  const url = absoluteUrl(options.path);
+  return {
+    title: options.fullTitle ? { absolute: options.title } : options.title,
+    description: options.description,
+    keywords: [...config.seo.keywords, ...(options.keywords ?? [])],
+    alternates: { canonical: options.path },
+    openGraph: {
+      title: options.title,
+      description: options.description,
+      url,
+      type: "website",
+      siteName: config.hospital.name,
+      locale: "en_IN",
+      images: [{ url: shareImage, width: 1200, height: 630, alt: options.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: options.title,
+      description: options.description,
+      images: [shareImage],
+    },
+    robots: { index: true, follow: true },
+  };
 }
 
 export { clip as clipSnippet, TITLE_LIMIT, DESCRIPTION_LIMIT };

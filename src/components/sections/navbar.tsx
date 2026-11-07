@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Menu, Phone, Calendar, Ambulance, ChevronRight } from "lucide-react";
 
@@ -46,6 +47,7 @@ function BrandLogo({ className }: { className?: string }) {
 export function Navbar() {
   const siteConfig = useSiteConfig();
   const nav = useVisibleNav();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -67,7 +69,7 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
-          href="#home"
+          href={pathname === "/" ? "#home" : "/"}
           className="group flex items-center gap-2.5"
           aria-label={`${siteConfig.doctor.name} — home`}
         >

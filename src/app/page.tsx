@@ -1,55 +1,27 @@
-"use client";
+import type { Metadata } from "next";
+import { HomePage } from "@/components/home-page";
+import { JsonLd } from "@/components/json-ld";
+import { getSiteSettings } from "@/lib/site-settings";
+import { homeDescription, homeTitle, pageMetadata } from "@/lib/seo";
 
-import { useEffect, useState } from "react";
-import { Navbar } from "@/components/sections/navbar";
-import { Hero } from "@/components/sections/hero";
-import { Stats } from "@/components/sections/stats";
-import { About } from "@/components/sections/about";
-import { Expertise } from "@/components/sections/expertise";
-import { Highlights } from "@/components/sections/highlights";
-import { Services } from "@/components/sections/services";
-import { Facilities } from "@/components/sections/facilities";
-import { Credentials } from "@/components/sections/credentials";
-import { Location } from "@/components/sections/location";
-import { Contact } from "@/components/sections/contact";
-import { Footer } from "@/components/sections/footer";
-import { FloatingCta } from "@/components/sections/floating-cta";
-import { AdminPanel } from "@/components/admin-panel";
-import { ThemeInjector } from "@/components/theme-injector";
+export async function generateMetadata(): Promise<Metadata> {
+  const config = await getSiteSettings();
+  return pageMetadata(config, {
+    path: "/",
+    title: homeTitle(config),
+    description: homeDescription(config),
+    fullTitle: true,
+  });
+}
 
-export default function Home() {
-  const [primaryColor, setPrimaryColor] = useState<string | undefined>(
-    undefined
-  );
-
-  useEffect(() => {
-    fetch("/api/settings")
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.ok) setPrimaryColor(d.settings.primaryColor);
-      })
-      .catch(() => {});
-  }, []);
-
+export default async function Page() {
+  const config = await getSiteSettings();
+  const title = homeTitle(config);
+  const description = homeDescription(config);
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <Stats />
-        <About />
-        <Expertise />
-        <Highlights />
-        <Services />
-        <Facilities />
-        <Credentials />
-        <Location />
-        <Contact />
-      </main>
-      <Footer />
-      <FloatingCta />
-      <AdminPanel />
-      <ThemeInjector primaryColor={primaryColor} />
-    </div>
+    <>
+      <JsonLd config={config} path="/" title={title} description={description} />
+      <HomePage />
+    </>
   );
 }

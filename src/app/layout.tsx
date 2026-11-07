@@ -3,22 +3,20 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { getSiteSettings } from "@/lib/site-settings";
-import { absoluteUrl, getSiteUrl } from "@/lib/site-url";
+import { getSiteUrl } from "@/lib/site-url";
 import { homeDescription, homeTitle, pageTitleTemplate } from "@/lib/seo";
-import { buildJsonLd } from "@/lib/json-ld";
 import { SiteConfigProvider } from "@/components/site-config-context";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-// SEO metadata is generated from the live settings so edits made in the
-// /admin panel (name, bio, hospital, keywords) update search-engine info too.
+// Site-wide defaults. Each page sets its own title, description, canonical and
+// structured data, so nothing here is page-specific.
 export async function generateMetadata(): Promise<Metadata> {
   const siteConfig = await getSiteSettings();
   const siteUrl = getSiteUrl();
   const title = homeTitle(siteConfig);
   const description = homeDescription(siteConfig);
-  const shareImage = absoluteUrl(siteConfig.seo.ogImage);
   return {
     metadataBase: new URL(siteUrl),
     title: { default: title, template: pageTitleTemplate(siteConfig) },
@@ -27,7 +25,6 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: siteConfig.doctor.name }],
     creator: siteConfig.hospital.name,
     publisher: siteConfig.hospital.name,
-    alternates: { canonical: "/" },
     icons: { icon: "/favicon.svg", apple: "/favicon.svg" },
     manifest: "/manifest.webmanifest",
     openGraph: {
@@ -37,15 +34,12 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "en_IN",
       url: siteUrl,
-      images: [{ url: shareImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [shareImage],
     },
-    robots: { index: true, follow: true },
   };
 }
 
@@ -60,19 +54,10 @@ export async function generateViewport(): Promise<Viewport> {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const siteConfig = await getSiteSettings();
-  const jsonLd = buildJsonLd(siteConfig, {
-    path: "/",
-    title: homeTitle(siteConfig),
-    description: homeDescription(siteConfig),
-  });
   const analyticsToken = siteConfig.seo.cloudflareAnalyticsToken.trim();
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-        />
         {/* Apply cached color theme before paint to avoid flash */}
         <script
           dangerouslySetInnerHTML={{
