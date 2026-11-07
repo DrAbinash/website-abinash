@@ -15,6 +15,7 @@ import {
 
 import { useSiteConfig } from "@/components/site-config-context";
 import { useVisibleNav } from "@/lib/visible-nav";
+import { treatmentHref, useSlugMap } from "@/components/slug-map-context";
 
 function BrandLogo({ className }: { className?: string }) {
   return (
@@ -44,6 +45,7 @@ function BrandLogo({ className }: { className?: string }) {
 export function Footer() {
   const siteConfig = useSiteConfig();
   const nav = useVisibleNav();
+  const slugMap = useSlugMap();
   const socialLinks = [
     { icon: Facebook, href: siteConfig.social.facebook, label: "Facebook" },
     { icon: Instagram, href: siteConfig.social.instagram, label: "Instagram" },
@@ -91,6 +93,22 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/treatments"
+                  className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                >
+                  Treatments
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/conditions"
+                  className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                >
+                  Conditions
+                </Link>
+              </li>
             </ul>
           </nav>
 
@@ -103,7 +121,7 @@ export function Footer() {
               {siteConfig.specializations.map((s) => (
                 <li key={s.title}>
                   <Link
-                    href="#expertise"
+                    href={treatmentHref(slugMap, s.title)}
                     className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                   >
                     {s.title}

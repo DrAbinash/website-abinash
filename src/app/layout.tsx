@@ -3,31 +3,36 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { getSiteSettings } from "@/lib/site-settings";
+import { getSiteUrl } from "@/lib/site-url";
+import { homeDescription, homeTitle, pageTitleTemplate } from "@/lib/seo";
 import { SiteConfigProvider } from "@/components/site-config-context";
+import { SlugMapProvider } from "@/components/slug-map-context";
+import { treatments } from "@/content/treatments";
+import { conditions } from "@/content/conditions";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hope.caredeoghar.com";
-
-// SEO metadata is generated from the live settings so edits made in the
-// /admin panel (name, bio, hospital, keywords) update search-engine info too.
+// Site-wide defaults. Each page sets its own title, description, canonical and
+// structured data, so nothing here is page-specific.
 export async function generateMetadata(): Promise<Metadata> {
   const siteConfig = await getSiteSettings();
+  const siteUrl = getSiteUrl();
+  const title = homeTitle(siteConfig);
+  const description = homeDescription(siteConfig);
   return {
     metadataBase: new URL(siteUrl),
-    title: `${siteConfig.doctor.name}, ${siteConfig.doctor.qualifications.slice(0, 3).join(", ")} — ${siteConfig.doctor.title} | ${siteConfig.hospital.shortName}`,
-    description: siteConfig.doctor.shortBio,
+    title: { default: title, template: pageTitleTemplate(siteConfig) },
+    description,
     keywords: siteConfig.seo.keywords,
     authors: [{ name: siteConfig.doctor.name }],
     creator: siteConfig.hospital.name,
     publisher: siteConfig.hospital.name,
-    alternates: { canonical: "/" },
     icons: { icon: "/favicon.svg", apple: "/favicon.svg" },
     manifest: "/manifest.webmanifest",
     openGraph: {
-      title: `${siteConfig.doctor.name} — ${siteConfig.doctor.title}`,
-      description: siteConfig.doctor.shortBio,
+      title,
+      description,
       siteName: siteConfig.hospital.name,
       type: "website",
       locale: "en_IN",
@@ -35,10 +40,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${siteConfig.doctor.name} — ${siteConfig.doctor.title}`,
-      description: siteConfig.doctor.shortBio,
+      title,
+      description,
     },
-    robots: { index: true, follow: true },
   };
 }
 
@@ -53,44 +57,16 @@ export async function generateViewport(): Promise<Viewport> {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const siteConfig = await getSiteSettings();
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Physician",
-        name: siteConfig.doctor.name,
-        medicalSpecialty: "Neurosurgery",
-        jobTitle: siteConfig.doctor.title,
-        worksFor: { "@type": "MedicalClinic", name: siteConfig.hospital.name },
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: siteConfig.hospital.address.full,
-          addressLocality: "Deoghar",
-          addressRegion: "Jharkhand",
-          postalCode: "814112",
-          addressCountry: "IN",
-        },
-        telephone: siteConfig.contact.phone,
-      },
-      {
-        "@type": "MedicalClinic",
-        name: siteConfig.hospital.name,
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: siteConfig.hospital.address.full,
-          addressLocality: "Deoghar",
-          addressRegion: "Jharkhand",
-          postalCode: "814112",
-          addressCountry: "IN",
-        },
-        telephone: siteConfig.contact.phone,
-      },
-    ],
+  const analyticsToken = siteConfig.seo.cloudflareAnalyticsToken.trim();
+  // Only the slug/title pairs cross into the browser; the page copy behind
+  // them stays in the server bundle.
+  const slugMap = {
+    treatments: treatments.map(({ slug, title }) => ({ slug, title })),
+    conditions: conditions.map(({ slug, title }) => ({ slug, title })),
   };
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         {/* Apply cached color theme before paint to avoid flash */}
         <script
           dangerouslySetInnerHTML={{
@@ -100,9 +76,16 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
         <SiteConfigProvider value={siteConfig}>
-          {children}
+          <SlugMapProvider value={slugMap}>{children}</SlugMapProvider>
         </SiteConfigProvider>
         <Toaster />
+        {analyticsToken && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+          />
+        )}
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * Default booking target: our own /book route, which 302-redirects to the Care
@@ -16,6 +17,8 @@ const DEFAULT_BOOKING_HREF = "/book";
  * Renders a booking link. Uses the bookingUrl from site settings when one is
  * configured, otherwise falls back to DEFAULT_BOOKING_HREF. In-page anchors
  * (e.g. "#contact") stay in the same tab; everything else opens a new tab.
+ * Off the homepage an anchor-only target resolves against /contact, because
+ * the enquiry form does not exist on the other pages.
  */
 export function BookLink({
   children,
@@ -27,8 +30,9 @@ export function BookLink({
   "aria-label"?: string;
 }) {
   // Start on the default so the CTA is correct on first paint — settings only
-  // ever override it, so there's no flash of the wrong destination.
+  // ever override it, so there is no flash of the wrong destination.
   const [href, setHref] = useState(DEFAULT_BOOKING_HREF);
+  const pathname = usePathname();
 
   useEffect(() => {
     fetch("/api/settings")
@@ -44,11 +48,13 @@ export function BookLink({
       });
   }, []);
 
-  const isInPage = href.startsWith("#");
+  const resolvedHref =
+    href.startsWith("#") && pathname !== "/" ? `/contact${href}` : href;
+  const isInPage = resolvedHref.startsWith("#");
 
   return (
     <a
-      href={href}
+      href={resolvedHref}
       {...(isInPage ? {} : { target: "_blank", rel: "noopener noreferrer" })}
       className={className}
       aria-label={ariaLabel}

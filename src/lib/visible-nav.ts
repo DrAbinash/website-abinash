@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useSiteConfig } from "@/components/site-config-context";
 import { type SiteConfig } from "@/config/site.config";
 
@@ -20,9 +21,18 @@ const SECTION_FOR_HREF: Partial<Record<string, keyof SiteConfig["sections"]>> = 
 
 export function useVisibleNav() {
   const siteConfig = useSiteConfig();
-  return siteConfig.nav.filter((item) => {
-    const section = SECTION_FOR_HREF[item.href];
-    if (!section) return true;
-    return siteConfig.sections[section]?.visible !== false;
-  });
+  const pathname = usePathname();
+  // Section anchors only exist on the homepage, so on any other page they are
+  // turned into absolute links back to that section instead of dead anchors.
+  const prefix = pathname === "/" ? "" : "/";
+  return siteConfig.nav
+    .filter((item) => {
+      const section = SECTION_FOR_HREF[item.href];
+      if (!section) return true;
+      return siteConfig.sections[section]?.visible !== false;
+    })
+    .map((item) => ({
+      ...item,
+      href: item.href.startsWith("#") ? `${prefix}${item.href}` : item.href,
+    }));
 }

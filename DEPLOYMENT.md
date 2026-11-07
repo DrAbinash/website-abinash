@@ -10,7 +10,7 @@ Docker app built into DSM 7.2+).
 
 - A Synology NAS with **Container Manager** installed (Package Center →
   search "Container Manager" → Install).
-- Your domain (e.g. `hope.caredeoghar.com`) pointed at your NAS, if you want
+- Your domain (e.g. `abinash.caredeoghar.com`) pointed at your NAS, if you want
   the site reachable on the internet (ask your domain registrar / IT
   person if you're unsure how — this is a one-time DNS setting).
 - A GitHub account with this repository, and Git installed *or* just the
@@ -30,8 +30,14 @@ Open **File Station**, navigate into the extracted folder, and edit
 `docker-compose.yml` with the built-in text editor (right-click the file →
 Open with → Text Editor), or use File Station's "Edit" option:
 
-- Find the line `NEXT_PUBLIC_SITE_URL=https://hope.caredeoghar.com` and make
-  sure it matches your real domain.
+- Find the line `SITE_URL=https://abinash.caredeoghar.com` and make sure it
+  is **the address of this website** — the one visitors see in the browser
+  bar. Do not put the hospital's address here. This value goes into the
+  page's "canonical" tag, which tells Google which address is the original;
+  if it names a different website, Google treats your pages as copies of
+  that one and will not show your site in search results. If you leave the
+  line out entirely the site uses `https://abinash.caredeoghar.com`, which
+  is safer than a wrong value.
 - Find `ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme123}` — **change
   `changeme123`** to a password only you know. This protects the page
   where you'll read patient enquiries sent through the contact form
@@ -61,7 +67,7 @@ website container running on port 3008.
   other sites, drop this `Caddyfile` into that setup.
 - If you don't have a reverse proxy yet, DSM's own **Control Panel →
   Login Portal → Advanced → Reverse Proxy** is usually simpler: create a
-  rule that forwards `hope.caredeoghar.com` (port 443, HTTPS) to
+  rule that forwards `abinash.caredeoghar.com` (port 443, HTTPS) to
   `localhost:3008` (the container's published port). DSM will also handle
   the SSL certificate for you (**Control Panel → Security →
   Certificate**, use "Let's Encrypt").
@@ -112,3 +118,4 @@ folder.
 | Site loads on `http://NAS-IP:3008` but not on your domain | Reverse proxy port doesn't match `3008`, or DNS isn't pointed at your NAS yet |
 | Contact form says "could not save your message" | Container Manager → Project → Logs; check for database errors, or the `hope-neuro-data` volume may need more disk space |
 | Can't log into `/admin/enquiries` | Double-check `ADMIN_PASSWORD` in `docker-compose.yml` matches what you're typing, then restart the project after any change to `docker-compose.yml` |
+| Site loads fine but never appears on Google | `SITE_URL` in `docker-compose.yml` names a different website. Fix it, rebuild, then check `https://yourdomain/sitemap.xml` lists your own address |
