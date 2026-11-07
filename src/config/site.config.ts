@@ -39,13 +39,30 @@ export const siteConfig = {
     name: "Hope NeuroTrauma & Multi Speciality Hospital",
     shortName: "Hope NeuroTrauma Hospital",
     tagline: "Saving Brains. Saving Lives. Restoring Hope.",
+    /** The hospital's own website, linked from this site's footer. */
+    websiteUrl: "https://hope.caredeoghar.com",
     address: {
       line1: "Castairs Town",
       line2: "Near Bajla Mahila College",
       line3: "Deoghar, Jharkhand — 814112",
       country: "India",
       full: "Castairs Town, Near Bajla Mahila College, Deoghar - 814112, Jharkhand, India",
+      city: "Deoghar",
+      region: "Jharkhand",
+      postalCode: "814112",
+      /**
+       * Map coordinates of the hospital entrance, from Google Maps
+       * (right-click the pin — the two numbers at the top are lat,lng).
+       * Left empty they are simply left out of the structured data.
+       */
+      latitude: "",
+      longitude: "",
     },
+    /**
+     * Towns/districts the practice serves. Shown to Google as the service
+     * area, so keep it to places patients really travel from.
+     */
+    areaServed: ["Deoghar", "Jharkhand"],
     mapEmbedUrl: "https://www.google.com/maps?q=Bajla+Mahila+College,+Deoghar,+Jharkhand+814112&output=embed",
     mapLinkUrl: "https://www.google.com/maps/search/?api=1&query=Bajla+Mahila+College+Deoghar+814112",
   },
@@ -181,15 +198,50 @@ export const siteConfig = {
     creditLine: "Designed for Dr. Abinash Kumar, Consultant Neurosurgeon",
   },
   seo: {
+    /**
+     * The phrase this site is trying to appear for on Google. It is used in
+     * the title tag and the main heading, so it should be exactly what a
+     * patient types — words first, not the doctor's name.
+     */
+    primaryKeyword: "Neurosurgeon in Deoghar",
     keywords: [
       "Neurosurgeon Deoghar",
+      "Neurosurgeon in Deoghar",
+      "Best neurosurgeon Deoghar",
+      "Brain surgeon Deoghar",
       "Dr Abinash Kumar",
       "Neurosurgery Jharkhand",
       "Brain surgery Deoghar",
+      "Brain tumour surgery Deoghar",
       "Spine surgery Deoghar",
+      "Slipped disc treatment Deoghar",
+      "Head injury hospital Deoghar",
       "Head injury treatment",
+      "Neurotrauma hospital Jharkhand",
       "Hope NeuroTrauma Hospital",
     ],
+    /**
+     * Optional overrides for the homepage title and description. Left empty,
+     * both are composed from the doctor, hospital and keyword fields above, so
+     * editing those in /admin updates the search snippet automatically.
+     * Google shows roughly 60 characters of a title and 155 of a description.
+     */
+    homeTitle: "",
+    homeDescription: "",
+    /** 1200×630 picture shown when the page is shared on WhatsApp/Facebook. */
+    ogImage: "/og-image.jpg",
+    /**
+     * Link to the Google Business Profile — the listing with the map, photos
+     * and reviews that appears for "neurosurgeon Deoghar". Paste the short
+     * link from Google Business Profile → Share → Copy link.
+     */
+    googleBusinessProfileUrl: "",
+    /**
+     * Cloudflare Web Analytics beacon token (Cloudflare dashboard → Analytics
+     * & Logs → Web Analytics → Add site → copy the token). Empty means no
+     * analytics script is added to the page.
+     */
+    cloudflareAnalyticsToken: "",
   },
   /** Site-wide green branding (color presets live in the gear panel). */
   theme: { primary: "#047857", primaryDark: "#065f46", accent: "#d97706" },
