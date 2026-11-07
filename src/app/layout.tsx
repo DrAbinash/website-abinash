@@ -3,17 +3,17 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { getSiteSettings } from "@/lib/site-settings";
+import { getSiteUrl } from "@/lib/site-url";
 import { SiteConfigProvider } from "@/components/site-config-context";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hope.caredeoghar.com";
-
 // SEO metadata is generated from the live settings so edits made in the
 // /admin panel (name, bio, hospital, keywords) update search-engine info too.
 export async function generateMetadata(): Promise<Metadata> {
   const siteConfig = await getSiteSettings();
+  const siteUrl = getSiteUrl();
   return {
     metadataBase: new URL(siteUrl),
     title: `${siteConfig.doctor.name}, ${siteConfig.doctor.qualifications.slice(0, 3).join(", ")} — ${siteConfig.doctor.title} | ${siteConfig.hospital.shortName}`,
