@@ -62,7 +62,15 @@ export const siteConfig = {
      * Towns/districts the practice serves. Shown to Google as the service
      * area, so keep it to places patients really travel from.
      */
-    areaServed: ["Deoghar", "Jharkhand"],
+    areaServed: [
+      "Deoghar",
+      "Dumka",
+      "Godda",
+      "Jamtara",
+      "Pakur",
+      "Sahibganj",
+      "Jharkhand",
+    ],
     mapEmbedUrl: "https://www.google.com/maps?q=Bajla+Mahila+College,+Deoghar,+Jharkhand+814112&output=embed",
     mapLinkUrl: "https://www.google.com/maps/search/?api=1&query=Bajla+Mahila+College+Deoghar+814112",
   },
