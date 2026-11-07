@@ -41,8 +41,12 @@ export default async function ContactPage() {
   const { hospital, contact, timings } = config;
   const bookingUrl = await getBookingUrl();
   const heading = `Contact & Appointments in ${hospital.address.city}`;
+  // The Book button leaves the site by default (the /book redirect), so the
+  // online-booking FAQ applies unless the admin pointed it at the in-page form.
   const faq = [
-    bookingUrl ? contactPage.bookingFaq : contactPage.formFaq,
+    bookingUrl.trim().startsWith("#")
+      ? contactPage.formFaq
+      : contactPage.bookingFaq,
     ...contactPage.faq,
   ];
   const whatsappHref = `https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(contact.whatsappMessage)}`;
