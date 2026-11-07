@@ -6,6 +6,9 @@ import { getSiteSettings } from "@/lib/site-settings";
 import { getSiteUrl } from "@/lib/site-url";
 import { homeDescription, homeTitle, pageTitleTemplate } from "@/lib/seo";
 import { SiteConfigProvider } from "@/components/site-config-context";
+import { SlugMapProvider } from "@/components/slug-map-context";
+import { treatments } from "@/content/treatments";
+import { conditions } from "@/content/conditions";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -55,6 +58,12 @@ export async function generateViewport(): Promise<Viewport> {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const siteConfig = await getSiteSettings();
   const analyticsToken = siteConfig.seo.cloudflareAnalyticsToken.trim();
+  // Only the slug/title pairs cross into the browser; the page copy behind
+  // them stays in the server bundle.
+  const slugMap = {
+    treatments: treatments.map(({ slug, title }) => ({ slug, title })),
+    conditions: conditions.map(({ slug, title }) => ({ slug, title })),
+  };
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -67,7 +76,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
         <SiteConfigProvider value={siteConfig}>
-          {children}
+          <SlugMapProvider value={slugMap}>{children}</SlugMapProvider>
         </SiteConfigProvider>
         <Toaster />
         {analyticsToken && (
