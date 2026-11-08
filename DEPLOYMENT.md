@@ -38,10 +38,11 @@ Open with → Text Editor), or use File Station's "Edit" option:
   that one and will not show your site in search results. If you leave the
   line out entirely the site uses `https://abinash.caredeoghar.com`, which
   is safer than a wrong value.
-- Find `ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme123}` — **change
-  `changeme123`** to a password only you know. This protects the page
-  where you'll read patient enquiries sent through the contact form
-  (`https://yourdomain/admin/enquiries`).
+- Find `ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme123}` — this is only the
+  **bootstrap** password for the staff login at
+  `https://yourdomain/admin`. After the first login, set your own password in
+  **Design & Layout → Staff login password** and save; from then on only your
+  password works and the value in this file is ignored.
 
 ## 4. Build and run the container
 
@@ -83,9 +84,10 @@ website container running on port 3008.
 - Visit your site — all sections, images, and the appointment form should
   load.
 - Submit a test message through the "Book an Appointment" form.
-- Go to `https://yourdomain.in/admin/enquiries`, log in with the
-  `ADMIN_PASSWORD` you set in Step 3, and confirm your test message shows
-  up there. This is where you'll check patient enquiries from now on —
+- Go to `https://yourdomain.in/admin/enquiries`, log in with your staff
+  password (the bootstrap password from Step 3 until you set your own in
+  **Design & Layout → Staff login password**), and confirm your test message
+  shows up there. This is where you'll check patient enquiries from now on —
   bookmark it.
 
 ## 7. Updating the site later
@@ -117,5 +119,5 @@ folder.
 |---|---|
 | Site loads on `http://NAS-IP:3008` but not on your domain | Reverse proxy port doesn't match `3008`, or DNS isn't pointed at your NAS yet |
 | Contact form says "could not save your message" | Container Manager → Project → Logs; check for database errors, or the `hope-neuro-data` volume may need more disk space |
-| Can't log into `/admin/enquiries` | Double-check `ADMIN_PASSWORD` in `docker-compose.yml` matches what you're typing, then restart the project after any change to `docker-compose.yml` |
+| Can't log into `/admin` | The password is the one you set in **Design & Layout → Staff login password**; if you never set one, it is the bootstrap `ADMIN_PASSWORD` from `docker-compose.yml` (restart the project after any change to that file) |
 | Site loads fine but never appears on Google | `SITE_URL` in `docker-compose.yml` names a different website. Fix it, rebuild, then check `https://yourdomain/sitemap.xml` lists your own address |

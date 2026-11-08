@@ -10,7 +10,6 @@ import {
   Inbox,
   CheckCircle2,
   AlertTriangle,
-  Palette,
 } from "lucide-react";
 
 import { type EditableSiteConfig } from "@/lib/site-settings";
@@ -53,6 +52,7 @@ export function SiteEditor() {
   const [saving, setSaving] = React.useState(false);
   const [saveMessage, setSaveMessage] = React.useState<string | null>(null);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [newPassword, setNewPassword] = React.useState("");
 
   const loadSettings = React.useCallback(async () => {
     try {
@@ -85,6 +85,10 @@ export function SiteEditor() {
 
   async function handleSave() {
     if (!settings || saving) return;
+    if (newPassword && newPassword.length < 4) {
+      setErrorMessage("The new staff password needs at least 4 characters.");
+      return;
+    }
     setSaving(true);
     setErrorMessage(null);
     setSaveMessage(null);
@@ -92,13 +96,16 @@ export function SiteEditor() {
       const res = await fetch("/api/admin/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(settings),
+        body: JSON.stringify(
+          newPassword ? { ...settings, newAdminPassword: newPassword } : settings
+        ),
       });
       const data = (await res.json()) as { ok: boolean; error?: string };
       if (!res.ok || !data.ok) {
         setErrorMessage(data.error || "Could not save. Please try again.");
         return;
       }
+      setNewPassword("");
       setSaveMessage("Saved! The website is updated — refresh it to see the changes.");
     } catch {
       setErrorMessage("Could not save. Please check your connection and try again.");
@@ -998,14 +1005,32 @@ export function SiteEditor() {
                 <CardTitle className="text-base">Colors &amp; booking link</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-start gap-2 rounded-lg border bg-muted/50 p-3 text-sm text-muted-foreground">
-                  <Palette className="mt-0.5 size-4 shrink-0" />
-                  <p>
-                    The <strong>color theme</strong> (green by default), the{" "}
-                    <strong>booking link</strong> (where the Book buttons go), and quick
-                    phone/WhatsApp changes live in the on-page <strong>gear panel</strong> —
-                    the round button at the bottom-right of the website itself.
-                  </p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <p className="text-sm font-medium">Color theme</p>
+                    <select
+                      value={settings.primaryColor}
+                      onChange={(e) =>
+                        mutate((d) => (d.primaryColor = e.target.value))
+                      }
+                      className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+                    >
+                      <option value="emerald">Emerald / Green</option>
+                      <option value="rose">Rose / Pink</option>
+                      <option value="amber">Golden / Amber</option>
+                      <option value="burgundy">Burgundy / Maroon</option>
+                    </select>
+                    <p className="text-xs text-muted-foreground">
+                      The website's main color.
+                    </p>
+                  </div>
+                  <TextField
+                    label="Online booking URL"
+                    value={settings.bookingUrl}
+                    onChange={(v) => mutate((d) => (d.bookingUrl = v))}
+                    hint="Empty = /book → caredeoghar.com online payment; #contact = the in-page enquiry form; any full URL goes there instead."
+                    placeholder="Empty = /book → caredeoghar.com"
+                  />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <TextField
@@ -1122,6 +1147,22 @@ export function SiteEditor() {
                   value={settings.seo.cloudflareAnalyticsToken}
                   onChange={(v) => mutate((d) => (d.seo.cloudflareAnalyticsToken = v))}
                   hint="The token from your Cloudflare Web Analytics site. Leave empty to turn visitor statistics off."
+                />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Staff login password</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <TextField
+                  type="password"
+                  label="New staff password (min 4 chars)"
+                  value={newPassword}
+                  onChange={setNewPassword}
+                  placeholder="Leave empty to keep the current one"
+                  hint="The password you type on the /admin login screen. Until you set one here the server's bootstrap password applies. Saving a new one signs out every open staff session, including this one."
                 />
               </CardContent>
             </Card>

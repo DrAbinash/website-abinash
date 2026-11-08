@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { COOKIE_NAME, isValidSessionToken } from "@/lib/admin-auth";
 import {
   getSiteSettings,
+  loadSavedSettings,
   saveSiteSettings,
   resetSiteSettings,
 } from "@/lib/site-settings";
@@ -20,7 +21,10 @@ export async function GET() {
   if (!(await isAuthenticated())) {
     return NextResponse.json({ ok: false, error: "Not logged in" }, { status: 401 });
   }
-  const settings = await getSiteSettings();
+  const settings = (await getSiteSettings()) as Record<string, unknown>;
+  // The password never round-trips to the browser; the editor sends a
+  // replacement via newAdminPassword instead.
+  delete settings.adminPassword;
   return NextResponse.json({ ok: true, settings, defaults: siteConfig });
 }
 
@@ -40,8 +44,24 @@ export async function PUT(request: Request) {
     return NextResponse.json({ ok: false, error: "Settings must be an object" }, { status: 422 });
   }
 
+  const incoming = body as Record<string, unknown>;
+  const replacement =
+    typeof incoming.newAdminPassword === "string" ? incoming.newAdminPassword : "";
+  delete incoming.newAdminPassword;
+  delete incoming.adminPassword;
+
+  // Carry the stored password forward so a plain content save never wipes it;
+  // a replacement of 4+ chars from the editor becomes the new password.
+  const saved = await loadSavedSettings();
+  const stored = saved?.adminPassword;
+  if (replacement.length >= 4) {
+    incoming.adminPassword = replacement;
+  } else if (typeof stored === "string" && stored.length >= 4) {
+    incoming.adminPassword = stored;
+  }
+
   try {
-    await saveSiteSettings(body as Record<string, unknown>);
+    await saveSiteSettings(incoming);
   } catch (error) {
     console.error("[admin/settings] save failed", error);
     return NextResponse.json({ ok: false, error: "Could not save settings" }, { status: 500 });

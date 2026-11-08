@@ -10,8 +10,9 @@ services:
       - NODE_ENV=production
       - DATABASE_URL=file:/app/data/hospital.db
       - SITE_URL=https://abinash.caredeoghar.com
-      # Password for the /admin/enquiries page where you can view messages
-      # sent through the website's contact form. CHANGE THIS before deploying.
+      # Bootstrap password for the /admin staff login. It only applies until
+      # you set your own password in the editor (Design & Layout → Staff login
+      # password); from then on the password you chose is the one that works.
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme123}
     volumes:
       - hope-neuro-data:/app/data

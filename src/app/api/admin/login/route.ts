@@ -1,21 +1,31 @@
 import { NextResponse } from "next/server";
-import { checkPassword, getSessionToken, COOKIE_NAME } from "@/lib/admin-auth";
+import {
+  checkPassword,
+  getSessionToken,
+  isPasswordConfigured,
+  COOKIE_NAME,
+} from "@/lib/admin-auth";
 
 export async function POST(request: Request) {
   const form = await request.formData().catch(() => null);
   const password = String(form?.get("password") ?? "");
 
-  if (!process.env.ADMIN_PASSWORD) {
+  if (!(await isPasswordConfigured())) {
     return NextResponse.redirect(
       new URL("/admin/login?error=notconfigured", request.url)
     );
   }
 
-  if (!password || !checkPassword(password)) {
+  if (!password || !(await checkPassword(password))) {
     return NextResponse.redirect(new URL("/admin/login?error=1", request.url));
   }
 
-  const token = getSessionToken()!;
+  const token = await getSessionToken();
+  if (!token) {
+    return NextResponse.redirect(
+      new URL("/admin/login?error=notconfigured", request.url)
+    );
+  }
   // Optional "next" field: return to the page that sent the user to login.
   // Restricted to /admin paths so it can't be abused as an open redirect.
   const next = String(form?.get("next") ?? "");

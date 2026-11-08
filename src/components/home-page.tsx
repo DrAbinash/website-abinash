@@ -15,7 +15,6 @@ import { Location } from "@/components/sections/location";
 import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/sections/footer";
 import { FloatingCta } from "@/components/sections/floating-cta";
-import { AdminPanel } from "@/components/admin-panel";
 import { ThemeInjector } from "@/components/theme-injector";
 
 export function HomePage() {
@@ -50,7 +49,6 @@ export function HomePage() {
       </main>
       <Footer />
       <FloatingCta />
-      <AdminPanel />
       <ThemeInjector primaryColor={primaryColor} />
     </div>
   );
